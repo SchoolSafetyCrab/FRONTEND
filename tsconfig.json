@@ -18,7 +18,6 @@
     "types": ["jest", "@testing-library/jest-dom"]
   },
   "include": ["src", "custom.d.ts"],
-  "resolveJsonModule": true,
   "esModuleInterop": true,
   "allowSyntheticDefaultImports": true,
   "baseUrl": "./",
