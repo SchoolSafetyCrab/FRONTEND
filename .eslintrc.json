@@ -1,18 +1,24 @@
 {
-    "parser": "@typescript-eslint/parser",
-    "plugins": ["react", "@typescript-eslint"],
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:prettier/recommended"
-    ],
-    "rules": {
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "prettier/prettier": ["error", { "endOfLine": "auto" }]
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    }
+    "ecmaVersion": 13,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "quotes": ["error", "double"],
+    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
+    "react/react-in-jsx-scope": "off",
+    "import/extensions": "off",
+    "object-curly-newline": "off",
+    "import/no-unresolved": "off"
+  }
 }
