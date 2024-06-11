@@ -1,0 +1,22 @@
+body {
+  background-color: #f0f8ff;
+}
+
+.fullsize {
+  min-height: 100vh;
+  display: grid;
+}
+
+.titleText {
+  font-size: 1.5rem;
+}
+
+.contentText {
+  font-size: 1rem;
+}
+
+.imgs {
+  max-width: 70vw;
+  height: auto;
+  object-fit: contain; /* 이미지가 잘리지 않도록 설정 */
+}

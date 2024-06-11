@@ -1,11 +1,13 @@
-import LoginMain from "./../components/Login/LoginMain";
-import Footer from "./../components/Footer";
-import Loading from "../components/Login/Loading";
+import { useState } from 'react';
+// import LoginMain from './../components/Login/LoginMain';
+import Loading from '../components/Login/Loading';
+import LoginMain from '../components/Login/LoginMain';
+import './Login.css';
 
 export default function Login() {
-  return (
-    <div>
-      <Loading />
-    </div>
-  );
+  const [loading, setLoading] = useState(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 2000);
+  return <div className="login-container">{loading ? <Loading /> : <LoginMain />}</div>;
 }

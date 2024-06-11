@@ -14,7 +14,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "quotes": ["warn", "double"],
+    "quotes": ["warn", "single"],
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
     "react/react-in-jsx-scope": "off",
     "import/extensions": "off",
@@ -25,6 +25,12 @@
       2,
       { "namedComponents": ["arrow-function", "function-declaration"] }
     ],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "some": ["nesting", "id"]
+      }
+    ]
   }
 }

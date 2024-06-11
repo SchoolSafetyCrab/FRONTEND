@@ -1,5 +1,4 @@
-declare namespace jest {
-  interface Matchers<R, T> {
-    toBeInTheDocument(): R;
-  }
-}
+declare module '*.jpg';
+declare module '*.png';
+declare module '*.jpeg';
+declare module '*.gif';

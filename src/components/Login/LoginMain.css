@@ -1,0 +1,28 @@
+.loginMain {
+  display: grid;
+  grid-template-rows: 2fr 1fr 50px;
+  margin-top: 1rem;
+}
+.logoAndImg {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.wannaJoin {
+  display: grid;
+  font-size: 1rem;
+  font-weight: bold;
+  justify-content: end;
+  margin-top: 0;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn {
+  border: 0;
+  background-color: transparent;
+}
