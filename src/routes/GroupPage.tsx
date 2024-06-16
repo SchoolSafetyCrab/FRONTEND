@@ -1,4 +1,4 @@
-export default function Group() {
+export default function GroupPage() {
   return (
     <div>
       <h1>Group</h1>

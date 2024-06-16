@@ -1,4 +1,4 @@
-export default function Way() {
+export default function WayPage() {
   return (
     <div>
       <h1>Way</h1>
