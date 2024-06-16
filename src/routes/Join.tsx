@@ -1,9 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
-import Agreement from '../components/Join/Agreement';
-import JoinIdentity from '../components/Join/JoinIdentity';
-import JoinIdAndPw from '../components/Join/JoinIdAndPw';
-import JoinProfile from '../components/Join/JoinProfile';
-import Verification from '../components/Join/Verification';
+
+import Agreement from '@pages/Join/Agreement';
+import JoinIdentity from '@pages/Join/JoinIdentity';
+import JoinIdAndPw from '@pages/Join/JoinIdAndPw';
+import JoinProfile from '@pages/Join/JoinProfile';
+import Verification from '@pages/Join/Verification';
+
 
 export default function Join() {
   return (

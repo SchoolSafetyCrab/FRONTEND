@@ -1,0 +1,40 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm install --force
+    - run: npm run build
+    - name: Setting .env
+      run: echo "REACT_APP_IMAGE_API_KEY=${{ secrets.ENV }}" >> .env
+    - name: web docker build and push
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker build --no-cache -t ${{ secrets.DOCKER_REPO }}/shcoolsafetycrab-front-bule .
+        docker push ${{ secrets.DOCKER_REPO }}/shcoolsafetycrab-front-bule
+        docker build --no-cache -t ${{ secrets.DOCKER_REPO }}/shcoolsafetycrab-front-green .
+        docker push ${{ secrets.DOCKER_REPO }}/shcoolsafetycrab-front-green
+    - name: remote server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          ./deploy.sh
