@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import Checkbox from '../Checkbox';
-import logo from '../../assets/images/logo.png';
-import './LoginMain.css';
+import Checkbox from '@components/common/Checkbox';
+import logo from '@assets/images/logo.png';
+import '@styles/LoginMain.css';
 
 export default function LoginMain() {
   const [saveId, setSaveId] = React.useState(false);
 
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
+    <div>
       <div className="loginMain fullsize">
         <section className="logoAndImg">
           <div>로고자리입니다</div>
@@ -54,6 +53,6 @@ export default function LoginMain() {
           <Link to="./join">회원가입</Link>
         </section>
       </div>
-    </>
+    </div>
   );
 }

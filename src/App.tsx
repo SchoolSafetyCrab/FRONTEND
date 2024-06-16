@@ -1,22 +1,22 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Join from './routes/Join';
-import Login from './routes/Login';
-import Home from './routes/Home';
-import Group from './routes/Group';
+import JoinPage from './routes/JoinPage';
+import LoginPage from './routes/LoginPage';
+import HomePage from './routes/HomePage';
+import GroupPage from './routes/GroupPage';
 import MyPage from './routes/MyPage';
-import Way from './routes/Way';
+import WayPage from './routes/WayPage';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/join/*" element={<Join />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/group" element={<Group />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/join/*" element={<JoinPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/group" element={<GroupPage />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/way" element={<Way />} />
+          <Route path="/way" element={<WayPage />} />
         </Routes>
       </Router>
     </div>

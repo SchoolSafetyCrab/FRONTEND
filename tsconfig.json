@@ -24,6 +24,7 @@
   "paths": {
     "*": ["src/*"]
   },
+  "extends": "./tsconfig.paths.json",
   "resolve": {
     "extensions": [".js", ".jsx", ".ts", ".tsx"]
   }
