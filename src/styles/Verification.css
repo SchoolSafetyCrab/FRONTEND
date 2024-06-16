@@ -1,0 +1,8 @@
+phone {
+  display: flex;
+  flex-direction: column;
+}
+.phone-div {
+  display: flex;
+  flex-direction: row;
+}

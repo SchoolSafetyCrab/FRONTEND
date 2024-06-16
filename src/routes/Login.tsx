@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // import LoginMain from './../components/Login/LoginMain';
-import Loading from '../components/Login/Loading';
-import LoginMain from '../components/Login/LoginMain';
+import Loading from '../pages/Login/Loading';
+import LoginMain from '../pages/Login/LoginMain';
 import './Login.css';
 
 export default function Login() {

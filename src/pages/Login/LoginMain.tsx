@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import Checkbox from '../Checkbox';
-import logo from '../../assets/images/logo.png';
-import './LoginMain.css';
+import Checkbox from '@components/common/Checkbox';
+import logo from '@assets/images/logo.png';
+import '@styles/LoginMain.css';
 
 export default function LoginMain() {
   const [saveId, setSaveId] = React.useState(false);
