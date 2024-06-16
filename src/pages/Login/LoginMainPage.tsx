@@ -9,8 +9,7 @@ export default function LoginMain() {
   const [saveId, setSaveId] = React.useState(false);
 
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
+    <div>
       <div className="loginMain fullsize">
         <section className="logoAndImg">
           <div>로고자리입니다</div>
@@ -54,6 +53,6 @@ export default function LoginMain() {
           <Link to="./join">회원가입</Link>
         </section>
       </div>
-    </>
+    </div>
   );
 }
