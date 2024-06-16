@@ -6,7 +6,7 @@ import JoinIdAndPwPage from '@pages/Join/JoinIdAndPwPage';
 import JoinProfilePage from '@pages/Join/JoinProfilePage';
 import VerificationPage from '@pages/Join/VerificationPage';
 
-export default function Join() {
+export default function JoinPage() {
   return (
     <Routes>
       <Route path="/" element={<AgreementPage />} />
