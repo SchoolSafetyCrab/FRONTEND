@@ -3,7 +3,7 @@ import LoadingPage from '@pages/Login/LoadingPage';
 import LoginMainPage from '@pages/Login/LoginMainPage';
 import '@styles/Login.css';
 
-export default function Login() {
+export default function LoginPage() {
   const [loading, setLoading] = useState(true);
   setTimeout(() => {
     setLoading(false);
