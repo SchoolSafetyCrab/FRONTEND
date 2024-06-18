@@ -51,11 +51,14 @@
 
 .find-id-pw{
   display: flex;
+  justify-content: end;
   align-items: center;
+  width: 100%;
 }
 
 .find-id-pw > button {
   padding: 0;
+  font-size: 0.8rem;
 }
 
 .button-container{
