@@ -1,0 +1,79 @@
+
+/* session */
+.login-main-header {
+  width: 100%;
+  height: 61%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.id-password{
+  width: 100%;
+  height: 34%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wanna-join{
+  width: 100%;
+  height: 5%;
+}
+
+/* login-main-header */
+.login-main-header>img{
+  width: 100%;
+  height: 100%;
+}
+
+/* id-password */
+.form-floating{
+  width: 90%;
+}
+
+.form-floating :nth-child(1){
+  margin-bottom: 2%;
+}
+
+.login-details {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3%;
+}
+
+.find-id-pw{
+  display: flex;
+  align-items: center;
+}
+
+.find-id-pw > button {
+  padding: 0;
+}
+
+.button-container{
+  margin-top: 5%;
+  width: 90%;
+}
+
+.login-btn{
+  width: 100%;
+}
+
+.custom-button{
+  background-color:#DDDBD6;
+}
+
+/* wanna-join */
+.wanna-join > div{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

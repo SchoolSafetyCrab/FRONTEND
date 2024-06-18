@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Col, Row, Container } from 'react-bootstrap';
 import JoinPage from './routes/JoinPage';
 import LoginPage from './routes/LoginPage';
 import HomePage from './routes/HomePage';
@@ -8,18 +9,22 @@ import WayPage from './routes/WayPage';
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/join/*" element={<JoinPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/group" element={<GroupPage />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/way" element={<WayPage />} />
-        </Routes>
-      </Router>
-    </div>
+    <Container fluid style={{ height: '100vh' }}>
+      <Row className="justify-content-md-center align-items-center">
+        <Col xs={12} md={8} lg={3} style={{ padding: '0' }}>
+          <Router>
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/join/*" element={<JoinPage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/group" element={<GroupPage />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/way" element={<WayPage />} />
+            </Routes>
+          </Router>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
