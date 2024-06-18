@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import LoadingPage from '@pages/Login/LoadingPage';
 import LoginMainPage from '@pages/Login/LoginMainPage';
-import '@styles/Login.css';
+import '@styles/login/Login.css';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(true);

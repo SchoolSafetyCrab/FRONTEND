@@ -1,5 +1,5 @@
 import logo from '@assets/images/logo.png';
-import '@styles/Loading.css';
+import '@styles/login/Loading.css';
 
 export default function Loading() {
   return (
