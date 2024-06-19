@@ -76,7 +76,7 @@ export default function JoinIdAndPw() {
             onClick={handleNext}
             disabled={isAuthDisabled}
             style={{
-              backgroundColor: isAuthDisabled ? '#DDDBD6' : '#007bff',
+              backgroundColor: isAuthDisabled ? '#DDDBD6' : '#FFB800',
               color: 'white',
               border: 'none',
             }}

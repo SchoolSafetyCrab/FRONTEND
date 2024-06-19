@@ -45,7 +45,7 @@ export default function LoginMain() {
             className="login-btn custom-button"
             variant="primary"
             size="lg"
-            style={{ backgroundColor: '#DDDBD6', color: 'white', border: 'none' }}
+            style={{ backgroundColor: '#FFB800', color: 'white', border: 'none' }}
           >
             로그인
           </Button>

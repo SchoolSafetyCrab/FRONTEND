@@ -5,6 +5,7 @@ import '@styles/join/Verification.css';
 
 export default function Verification() {
   const navigate = useNavigate();
+  const [isNumberDisabled, setIsNumberDisabled] = React.useState(true);
   const [isAuthDisabled, setIsAuthDisabled] = React.useState(true);
   const [password, setPassword] = React.useState(false);
 
@@ -13,11 +14,14 @@ export default function Verification() {
       target: { value },
     } = event;
 
-    if (value.length === 11) {
-      setIsAuthDisabled(false);
-    } else {
-      setIsAuthDisabled(true);
-    }
+    setIsNumberDisabled(value.length !== 11);
+  };
+  const handleAuthNumber = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+
+    setIsAuthDisabled(value.length === 0);
   };
   const handlePW = () => {
     setPassword(true);
@@ -49,7 +53,13 @@ export default function Verification() {
         </div>
         {password && (
           <div className="form-floating">
-            <input type="text" className="form-control" id="pwInput" placeholder="인증번호" />
+            <input
+              type="text"
+              className="form-control"
+              id="pwInput"
+              placeholder="인증번호"
+              onChange={handleAuthNumber}
+            />
             <label htmlFor="pwInput">인증번호</label>
           </div>
         )}
@@ -62,9 +72,9 @@ export default function Verification() {
               variant="primary"
               size="lg"
               onClick={handlePW}
-              disabled={isAuthDisabled}
+              disabled={isNumberDisabled}
               style={{
-                backgroundColor: isAuthDisabled ? '#DDDBD6' : '#007bff',
+                backgroundColor: isNumberDisabled ? '#DDDBD6' : '#FFB800',
                 color: 'white',
                 border: 'none',
               }}
@@ -82,12 +92,12 @@ export default function Verification() {
               onClick={handleNext}
               disabled={isAuthDisabled}
               style={{
-                backgroundColor: isAuthDisabled ? '#DDDBD6' : '#007bff',
+                backgroundColor: isAuthDisabled ? '#DDDBD6' : '#FFB800',
                 color: 'white',
                 border: 'none',
               }}
             >
-              Next
+              다음
             </Button>
           </div>
         )}

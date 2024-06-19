@@ -78,7 +78,7 @@ export default function Agreement() {
             onClick={handleNext}
             disabled={isNextDisabled}
             style={{
-              backgroundColor: isNextDisabled ? '#DDDBD6' : '#007bff',
+              backgroundColor: isNextDisabled ? '#DDDBD6' : '#FFB800',
               color: 'white',
               border: 'none',
             }}

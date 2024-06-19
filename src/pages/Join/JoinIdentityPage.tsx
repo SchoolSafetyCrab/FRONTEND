@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import logo from '@assets/images/logo.png';
-import '@styles/JoinIdentity.css';
+import Button from 'react-bootstrap/Button';
+
+import '@styles/join/JoinIdDentity.css';
 
 export default function JoinIdentity() {
   const navigate = useNavigate();
@@ -9,30 +10,49 @@ export default function JoinIdentity() {
     navigate('/');
   };
 
+  const isFinshDisabled = false;
   return (
-    <div>
-      <h1>마지막 단계예요!</h1>
-      <h1>직업을 선택해 주세요.</h1>
-      <div className="card-container">
-        <div className="card">
-          <img src={logo} className="card-img-top " alt="..." />
-          <p>학생</p>
-        </div>
-        <div className="card">
-          <img src={logo} className="card-img-top " alt="..." />
-          <p>선생님</p>
-        </div>
-        <div className="card">
-          <img src={logo} className="card-img-top " alt="..." />
-          <p>부모님</p>
-        </div>
-      </div>
+    <>
+      <section className="join-dentity-header">
+        <h1>
+          마지막 단계예요!
+          <br />
+          직업을 선택해 주세요.
+        </h1>
+      </section>
 
-      <div className="buttonContainer d-grid gap-2">
-        <button onClick={handleNext} type="button" className="btn btn-primary mt-3">
-          Next
-        </button>
-      </div>
-    </div>
+      <section className="join-dentity-select">
+        <div className="card-container">
+          <button type="button" className="card">
+            <p>학생</p>
+          </button>
+          <button type="button" className="card">
+            <p>선생님</p>
+          </button>
+          <button type="button" className="card">
+            <p>부모님</p>
+          </button>
+        </div>
+      </section>
+
+      <section className="join-dentity-btn">
+        <div className="buttonContainer">
+          <Button
+            className="agreement-btn custom-button"
+            variant="primary"
+            size="lg"
+            onClick={handleNext}
+            disabled={isFinshDisabled}
+            style={{
+              backgroundColor: isFinshDisabled ? '#DDDBD6' : '#FFB800',
+              color: 'white',
+              border: 'none',
+            }}
+          >
+            완료
+          </Button>
+        </div>
+      </section>
+    </>
   );
 }
