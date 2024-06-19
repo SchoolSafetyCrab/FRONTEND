@@ -77,7 +77,7 @@ export default function JoinProfile() {
               border: 'none',
             }}
           >
-            Next
+            다음
           </Button>
         </div>
       </section>
