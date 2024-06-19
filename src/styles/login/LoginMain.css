@@ -40,6 +40,10 @@
   margin-bottom: 2%;
 }
 
+.form-floating > input {
+  border: #FFD568 1px solid;
+}
+
 .login-details {
   width: 90%;
   display: flex;
