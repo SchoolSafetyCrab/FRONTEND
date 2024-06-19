@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 
-import AgreementPage from '@pages/join/AgreementPage';
-import JoinIdentityPage from '@pages/join/JoinIdentityPage';
-import JoinIdAndPwPage from '@pages/join/JoinIdAndPwPage';
-import JoinProfilePage from '@pages/join/JoinProfilePage';
-import VerificationPage from '@pages/join/VerificationPage';
+import AgreementPage from '@pages/joinPage/AgreementPage';
+import JoinIdentityPage from '@pages/joinPage/JoinIdentityPage';
+import JoinIdAndPwPage from '@pages/joinPage/JoinIdAndPwPage';
+import JoinProfilePage from '@pages/joinPage/JoinProfilePage';
+import VerificationPage from '@pages/joinPage/VerificationPage';
 
 import '@styles/join/Join.css';
 
