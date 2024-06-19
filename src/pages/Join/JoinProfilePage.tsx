@@ -1,68 +1,178 @@
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
-import logo from '../../assets/images/logo.png';
+import React, { useState, ChangeEvent } from 'react';
+import Button from 'react-bootstrap/Button';
+import profile from '@assets/images/profile.svg';
+import '@styles/join/JoinProfile.css';
 
 export default function JoinProfile() {
-  const [img, setImg] = React.useState(false);
   const navigate = useNavigate();
-
-  const handleImg = () => {
-    setImg(true);
-  };
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
+  const [isProfileSelectVisible, setProfileSelectVisible] = useState(false);
 
   const handleNext = () => {
     navigate('/join/identity');
   };
 
-  return (
-    <div>
-      <h1>거의 다 왔어요!</h1>
-      <h1>프로필을 설정해 주세요.</h1>
-      <div className="box text-center">
-        <button
-          type="button"
-          className="btn p-0 border-0"
-          style={{ background: 'none' }}
-          onClick={handleImg}
-        >
-          <img
-            src={logo}
-            className="rounded-circle profile mx-auto d-block border border-2 img-thumbnail"
-            alt="프로필 이미지"
-            aria-label="프로필 이미지 선택"
-          />
-        </button>
-      </div>
-      <input type="text" className="form-control mt-3" id="nickname" placeholder="닉네임" />
-      <div className="buttonContainer d-grid gap-2">
-        <button onClick={handleNext} type="button" className="btn btn-primary mt-3">
-          Next
-        </button>
-      </div>
+  const handleImageClick = () => {
+    setProfileSelectVisible(true);
+  };
+  const handleImageClickBlock = () => {
+    setProfileSelectVisible(false);
+  };
 
-      {img && (
-        <div
-          className="offcanvas offcanvas-bottom"
-          id="offcanvasBottom"
-          aria-labelledby="offcanvasBottomLabel"
-        >
-          <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasBottomLabel">
-              이미지 업로드
-            </h5>
-            <button
-              type="button"
-              className="btn-close text-reset"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
+  const handleChangeNickname = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+
+    setIsNextDisabled(value.length === 0);
+  };
+
+  return (
+    <>
+      <section className="join-profile-header">
+        <h1>
+          거의 다 왔어요!
+          <br />
+          프로필을 설정해 주세요.
+        </h1>
+      </section>
+
+      <section className="join-profile-input">
+        <div className="box text-center">
+          <button
+            type="button"
+            className="btn p-0 border-0"
+            style={{ background: 'none', border: 'none' }}
+            onClick={handleImageClick}
+          >
+            <img
+              src={profile}
+              alt="프로필 이미지"
+              aria-label="프로필 이미지 선택"
+              style={{ border: 'none' }}
             />
-          </div>
-          <div className="offcanvas-body">
-            <p>이미지를 업로드해 주세요.</p>
-            <input type="file" className="form-control" id="uploadImage" />
-          </div>
+          </button>
         </div>
-      )}
-    </div>
+        <input
+          type="text"
+          className="form-control mt-5"
+          id="nickname"
+          placeholder="닉네임"
+          onChange={handleChangeNickname}
+        />
+      </section>
+
+      <section className="join-profile-btn">
+        <div className="buttonContainer">
+          <Button
+            className="agreement-btn custom-button"
+            variant="primary"
+            size="lg"
+            onClick={handleNext}
+            disabled={isNextDisabled}
+            style={{
+              backgroundColor: isNextDisabled ? '#DDDBD6' : '#FFB800',
+              color: 'white',
+              border: 'none',
+            }}
+          >
+            다음
+          </Button>
+        </div>
+      </section>
+      <section
+        className="join-profile-select"
+        style={{
+          transform: isProfileSelectVisible ? 'translateY(-100%)' : 'translateY(0)',
+        }}
+      >
+        <div>
+          <button
+            type="button"
+            className="btn p-0 border-0"
+            style={{ backgroundColor: '#ffffff', border: 'none' }}
+            onClick={handleImageClickBlock}
+          >
+            <img
+              src={profile}
+              alt="프로필 이미지"
+              aria-label="프로필 이미지 선택"
+              style={{ border: 'none' }}
+            />
+          </button>
+
+          <button
+            type="button"
+            className="btn p-0 border-0"
+            style={{ backgroundColor: '#ffffff', border: 'none' }}
+            onClick={handleImageClickBlock}
+          >
+            <img
+              src={profile}
+              alt="프로필 이미지"
+              aria-label="프로필 이미지 선택"
+              style={{ border: 'none' }}
+            />
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="btn p-0 border-0"
+            style={{ backgroundColor: '#ffffff', border: 'none' }}
+            onClick={handleImageClickBlock}
+          >
+            <img
+              src={profile}
+              alt="프로필 이미지"
+              aria-label="프로필 이미지 선택"
+              style={{ border: 'none' }}
+            />
+          </button>
+          <button
+            type="button"
+            className="btn p-0 border-0"
+            style={{ backgroundColor: '#ffffff', border: 'none' }}
+            onClick={handleImageClickBlock}
+          >
+            <img
+              src={profile}
+              alt="프로필 이미지"
+              aria-label="프로필 이미지 선택"
+              style={{ border: 'none' }}
+            />
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="btn p-0 border-0"
+            style={{ backgroundColor: '#ffffff', border: 'none' }}
+            onClick={handleImageClickBlock}
+          >
+            <img
+              src={profile}
+              alt="프로필 이미지"
+              aria-label="프로필 이미지 선택"
+              style={{ border: 'none' }}
+            />
+          </button>
+          <button
+            type="button"
+            className="btn p-0 border-0"
+            style={{ backgroundColor: '#ffffff', border: 'none' }}
+            onClick={handleImageClickBlock}
+          >
+            <img
+              src={profile}
+              alt="프로필 이미지"
+              aria-label="프로필 이미지 선택"
+              style={{ border: 'none' }}
+            />
+          </button>
+        </div>
+      </section>
+    </>
   );
 }

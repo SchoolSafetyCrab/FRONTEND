@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import LoadingPage from '@pages/Login/LoadingPage';
-import LoginMainPage from '@pages/Login/LoginMainPage';
+import LoadingPage from '@pages/login/LoadingPage';
+import LoginMainPage from '@pages/login/LoginMainPage';
 import '@styles/login/Login.css';
 
 export default function LoginPage() {

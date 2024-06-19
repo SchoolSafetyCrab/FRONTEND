@@ -11,15 +11,14 @@ interface CheckboxProps {
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({ children, disabled, checked, onChange }) => {
-  const inputId = 'checkbox-input';
   return (
-    <label htmlFor={inputId}>
+    <label style={{ width: '100%' }}>
       <input
-        id={inputId}
         type="checkbox"
         disabled={disabled}
         checked={checked}
         onChange={({ target }) => onChange(target.checked)}
+        style={{ marginRight: '5%' }}
       />
       {children}
     </label>
