@@ -1,0 +1,19 @@
+:root {
+  --header-height: 3rem;
+  --tabbar-height: 3rem;
+}
+
+.mainContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  margin-top: var(--header-height);
+  margin-bottom: var(--tabbar-height);
+}
