@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import '@styles/join/Verification.css';
 
-import sendAuthCode from '../../api/join/JoinApi';
+import sendAuthCode from '../../api/join/SendAuthCodeApi';
+import checkCode from '../../api/join/CheckAuthCodeApi';
 
 export default function Verification() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function Verification() {
   const [isAuthDisabled, setIsAuthDisabled] = useState(true);
   const [password, setPassword] = useState(false);
   const [inputPhoneNumber, setPhoneNumber] = useState('');
+  const [inputAuthCode, setInputAuthCode] = useState('');
 
   const handlePhoneNumber = (event: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -19,24 +21,31 @@ export default function Verification() {
 
     if (value.length === 11) {
       setPhoneNumber(value);
+      setIsNumberDisabled(false);
     } else {
       setPhoneNumber('');
+      setIsNumberDisabled(true);
     }
-    setIsNumberDisabled(value.length !== 11);
   };
   const handleAuthNumber = (event: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = event;
 
+    setInputAuthCode(value);
     setIsAuthDisabled(value.length === 0);
   };
   const handlePW = () => {
     const formatted = `${inputPhoneNumber.slice(0, 3)}-${inputPhoneNumber.slice(3, 7)}-${inputPhoneNumber.slice(7)}`;
-    setPassword(sendAuthCode({ phoneNumber: formatted }));
+    setPassword(!sendAuthCode({ phoneNumber: formatted }));
   };
-  const handleNext = () => {
-    navigate('/join/id-and-pw');
+  const handleNext = async () => {
+    const formatted = `${inputPhoneNumber.slice(0, 3)}-${inputPhoneNumber.slice(3, 7)}-${inputPhoneNumber.slice(7)}`;
+
+    const isValid = await checkCode({ phoneNumber: formatted, authCode: inputAuthCode });
+    if (isValid) {
+      navigate('/join/id-and-pw');
+    }
   };
 
   return (
