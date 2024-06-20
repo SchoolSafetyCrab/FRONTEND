@@ -26,7 +26,7 @@
     width: 100%;
     height: 80%;
     bottom: -80%; /* 초기 상태에서 화면 아래에 숨겨진 상태 */
-    background-color: #FFD658;
+    background-color: #ffffff;
     transition: transform 0.5s ease-in-out; /* 애니메이션 속성 추가 */
   }
   
