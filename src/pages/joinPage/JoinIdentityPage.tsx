@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-
+import { useAtom } from 'jotai';
 import studentDisActive from '@assets/images/job/disactive/jobStudentDisActive.svg';
 import parentDisActive from '@assets/images/job/disactive/jobParentDisActive.svg';
 import teacherDisActive from '@assets/images/job/disactive/jobTeacherDisActive.svg';
@@ -11,14 +11,38 @@ import teacherActive from '@assets/images/job/active/jobTeacherActive.svg';
 import '@styles/join/JoinIdDentity.css';
 import { useState } from 'react';
 
+import join from '../../api/join/JoinApi';
+import {
+  activeRoleAtom,
+  idAtom,
+  passwordAtom,
+  nicknameAtom,
+  iconImgAtom,
+  phoneNumberAtom,
+} from '../../store/join/joinstore';
+
 export default function JoinIdentity() {
   const [activeStudent, setActiveStudent] = useState(false);
   const [activeTeacher, setActiveTeacher] = useState(false);
   const [activeParent, setActiveParent] = useState(false);
+  const [role, setActiveRole] = useAtom(activeRoleAtom);
+  const [id] = useAtom(idAtom);
+  const [password] = useAtom(passwordAtom);
+  const [nickname] = useAtom(nicknameAtom);
+  const [iconImg] = useAtom(iconImgAtom);
+  const [phoneNumber] = useAtom(phoneNumberAtom);
 
   const navigate = useNavigate();
 
   const handleNext = () => {
+    join({
+      id,
+      password,
+      nickname,
+      iconImg,
+      role,
+      phoneNumber,
+    });
     navigate('/');
   };
 
@@ -26,18 +50,21 @@ export default function JoinIdentity() {
     setActiveStudent(true);
     setActiveTeacher(false);
     setActiveParent(false);
+    setActiveRole('ROLE_STUDENT');
   };
 
   const handleActiveTeacher = () => {
     setActiveStudent(false);
     setActiveTeacher(true);
     setActiveParent(false);
+    setActiveRole('ROLE_TEACHER');
   };
 
   const handleActiveParent = () => {
     setActiveStudent(false);
     setActiveTeacher(false);
     setActiveParent(true);
+    setActiveRole('ROLE_PARENTS');
   };
 
   // 완료 버튼의 활성화 상태는 세 버튼 중 하나가 활성화되어 있는지로 결정합니다.

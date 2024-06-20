@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import { useAtom } from 'jotai';
 
 import '@styles/join/JoinIdPw.css';
 import { ChangeEvent, useState } from 'react';
 import checkId from '../../api/join/CheckDuplIdApi';
+import { idAtom, passwordAtom } from '../../store/join/joinstore';
 
 export default function JoinIdAndPw() {
   const [inputId, setInputId] = useState('');
@@ -11,10 +13,14 @@ export default function JoinIdAndPw() {
   const [isCheckDisabled, setIsCheckDisabled] = useState(true);
   const [isCheckDupl, setIsCheckDupl] = useState(false);
   const [isNextDisabled, setIsNextDisabled] = useState(true);
+  const [, setId] = useAtom(idAtom);
+  const [, setPassoword] = useAtom(passwordAtom);
 
   const navigate = useNavigate();
 
   const handleNext = () => {
+    setId(inputId);
+    setPassoword(inputPw);
     navigate('/join/profile');
   };
 

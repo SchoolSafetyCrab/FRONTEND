@@ -9,14 +9,19 @@ import profile4 from '@assets/images/profile/profile4.svg';
 import profile5 from '@assets/images/profile/profile5.svg';
 import profile6 from '@assets/images/profile/profile6.svg';
 import '@styles/join/JoinProfile.css';
+import { useAtom } from 'jotai';
+import { nicknameAtom } from '../../store/join/joinstore';
 
 export default function JoinProfile() {
   const navigate = useNavigate();
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isProfileSelectVisible, setProfileSelectVisible] = useState(false);
   const [selectedProfileImage, setSelectedProfileImage] = useState(profile);
+  const [inputNickname, setInputNickname] = useState('');
+  const [, setNickname] = useAtom(nicknameAtom);
 
   const handleNext = () => {
+    setNickname(inputNickname);
     navigate('/join/identity');
   };
 
@@ -33,7 +38,7 @@ export default function JoinProfile() {
     const {
       target: { value },
     } = event;
-
+    setInputNickname(value);
     setIsNextDisabled(value.length === 0);
   };
 

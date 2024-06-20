@@ -1,18 +1,22 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import '@styles/join/Verification.css';
 
 import sendAuthCode from '../../api/join/SendAuthCodeApi';
 import checkCode from '../../api/join/CheckAuthCodeApi';
+import { phoneNumberAtom } from '../../store/join/joinstore';
 
 export default function Verification() {
   const navigate = useNavigate();
   const [isNumberDisabled, setIsNumberDisabled] = useState(true);
   const [isAuthDisabled, setIsAuthDisabled] = useState(true);
   const [password, setPassword] = useState(false);
-  const [inputPhoneNumber, setPhoneNumber] = useState('');
+  const [inputPhoneNumber, setInputPhoneNumber] = useState('');
   const [inputAuthCode, setInputAuthCode] = useState('');
+
+  const [, setPhoneNumber] = useAtom(phoneNumberAtom);
 
   const handlePhoneNumber = (event: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -20,10 +24,10 @@ export default function Verification() {
     } = event;
 
     if (value.length === 11) {
-      setPhoneNumber(value);
+      setInputPhoneNumber(value);
       setIsNumberDisabled(false);
     } else {
-      setPhoneNumber('');
+      setInputPhoneNumber('');
       setIsNumberDisabled(true);
     }
   };
@@ -44,6 +48,7 @@ export default function Verification() {
 
     const isValid = await checkCode({ phoneNumber: formatted, authCode: inputAuthCode });
     if (isValid) {
+      setPhoneNumber(formatted);
       navigate('/join/id-and-pw');
     }
   };
