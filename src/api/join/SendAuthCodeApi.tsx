@@ -5,9 +5,9 @@ interface AuthCode {
   phoneNumber: string;
 }
 
-const sendAuthCode = (sendAuth: AuthCode): boolean => {
+const sendAuthCode = async (sendAuth: AuthCode): Promise<boolean> => {
   let result: boolean = false;
-  axios
+  await axios
     .post(`${API_BASE_URL}api/join/send/code`, sendAuth)
     .then(() => {
       result = true;

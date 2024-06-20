@@ -39,9 +39,11 @@ export default function Verification() {
     setInputAuthCode(value);
     setIsAuthDisabled(value.length === 0);
   };
-  const handlePW = () => {
+  const handlePW = async () => {
     const formatted = `${inputPhoneNumber.slice(0, 3)}-${inputPhoneNumber.slice(3, 7)}-${inputPhoneNumber.slice(7)}`;
-    setPassword(!sendAuthCode({ phoneNumber: formatted }));
+    const success = await sendAuthCode({ phoneNumber: formatted });
+
+    setPassword(success);
   };
   const handleNext = async () => {
     const formatted = `${inputPhoneNumber.slice(0, 3)}-${inputPhoneNumber.slice(3, 7)}-${inputPhoneNumber.slice(7)}`;
