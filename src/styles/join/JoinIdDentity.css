@@ -45,11 +45,3 @@
     align-items: center;
     border: 1px #FFD568 solid;
 }
-
-.card-container > button:hover {
-    background-color: #FFB800;
-}
-
-.card-container > button > p{
-    font-weight: bold;
-}
