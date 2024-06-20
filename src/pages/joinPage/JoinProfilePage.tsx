@@ -10,15 +10,17 @@ import profile5 from '@assets/images/profile/profile5.svg';
 import profile6 from '@assets/images/profile/profile6.svg';
 import '@styles/join/JoinProfile.css';
 import { useAtom } from 'jotai';
-import { nicknameAtom } from '../../store/join/joinstore';
+import { iconImgAtom, nicknameAtom } from '../../store/join/joinstore';
 
 export default function JoinProfile() {
   const navigate = useNavigate();
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isProfileSelectVisible, setProfileSelectVisible] = useState(false);
+  const [isSelectImg, setIsSelectImg] = useState(false);
   const [selectedProfileImage, setSelectedProfileImage] = useState(profile);
   const [inputNickname, setInputNickname] = useState('');
   const [, setNickname] = useAtom(nicknameAtom);
+  const [, setImg] = useAtom(iconImgAtom);
 
   const handleNext = () => {
     setNickname(inputNickname);
@@ -31,7 +33,15 @@ export default function JoinProfile() {
 
   const handleImageClickBlock = (selectedImage: string) => {
     setSelectedProfileImage(selectedImage);
+    setImg(selectedImage);
+    setIsSelectImg(true);
     setProfileSelectVisible(false);
+
+    if (inputNickname.length !== 0) {
+      setIsNextDisabled(false);
+    } else {
+      setIsNextDisabled(true);
+    }
   };
 
   const handleChangeNickname = (event: ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +49,11 @@ export default function JoinProfile() {
       target: { value },
     } = event;
     setInputNickname(value);
-    setIsNextDisabled(value.length === 0);
+    if (value.length !== 0 && isSelectImg) {
+      setIsNextDisabled(false);
+    } else {
+      setIsNextDisabled(true);
+    }
   };
 
   return (

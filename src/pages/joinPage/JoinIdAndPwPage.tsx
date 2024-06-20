@@ -19,7 +19,6 @@ export default function JoinIdAndPw() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    setId(inputId);
     setPassoword(inputPw);
     navigate('/join/profile');
   };
@@ -57,8 +56,11 @@ export default function JoinIdAndPw() {
   };
 
   const handleCheckDuplId = async () => {
-    const check = await checkId({ id: inputId });
-    setIsCheckDupl(check);
+    const success = await checkId({ id: inputId });
+    if (success) {
+      setId(inputId);
+    }
+    setIsCheckDupl(success);
   };
 
   return (

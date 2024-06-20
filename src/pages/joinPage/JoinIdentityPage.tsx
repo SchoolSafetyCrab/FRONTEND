@@ -35,7 +35,7 @@ export default function JoinIdentity() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    join({
+    const success = await join({
       id,
       password,
       nickname,
@@ -43,7 +43,9 @@ export default function JoinIdentity() {
       role,
       phoneNumber,
     });
-    navigate('/');
+    if (success) {
+      navigate('/');
+    }
   };
 
   const handleActiveStudent = () => {

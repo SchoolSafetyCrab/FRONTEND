@@ -15,7 +15,6 @@ const join = async (signUp: Join): Promise<boolean> => {
   await axios
     .post(`${API_BASE_URL}api/join`, signUp)
     .then(() => {
-      alert('사용가능한 아이디 입니다.');
       result = true;
     })
     .catch((err) => {
