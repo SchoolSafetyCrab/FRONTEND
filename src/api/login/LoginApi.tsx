@@ -10,19 +10,23 @@ interface UserDto {
 }
 
 // 로그인 함수 정의
-const login = (userDto: UserDto): void => {
-  axios
+const login = async (userDto: UserDto): Promise<boolean> => {
+  let result: boolean = false;
+  await axios
     .post(`${API_BASE_URL}api/login`, userDto)
     .then((res) => {
       const jwt = res.headers.authorization;
+
       if (jwt) {
         localStorage.setItem(ACCESS_TOKEN, jwt);
-        window.location.href = '/main';
+        result = true;
       }
     })
     .catch(() => {
-      alert("로그인 실패");
+      alert('로그인 실패');
+      result = false;
     });
+  return result;
 };
 
 export default login;

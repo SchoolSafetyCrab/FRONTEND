@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Checkbox from '@components/common/Checkbox';
 import '@styles/login/LoginMain.css';
@@ -11,6 +11,8 @@ export default function LoginMain() {
   const [saveId, setSaveId] = useState(false);
   const [inputId, setInputId] = useState('');
   const [inputPw, setInputPw] = useState('');
+
+  const navigate = useNavigate();
 
   const handleChangeId = (event: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -26,8 +28,11 @@ export default function LoginMain() {
     setInputPw(value);
   };
 
-  const handleLogin = () => {
-    login({ id: inputId, password: inputPw });
+  const handleLogin = async () => {
+    const success = await login({ id: inputId, password: inputPw });
+    if (success) {
+      navigate('/main');
+    }
   };
 
   return (

@@ -34,7 +34,7 @@ export default function JoinIdentity() {
 
   const navigate = useNavigate();
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const success = await join({
       id,
       password,
