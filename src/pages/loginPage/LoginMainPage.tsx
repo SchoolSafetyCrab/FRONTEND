@@ -1,13 +1,39 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { ChangeEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Checkbox from '@components/common/Checkbox';
 import '@styles/login/LoginMain.css';
 
 import MainHeader from '@assets/images/MainHeader.svg';
+import login from '../../api/login/LoginApi';
 
 export default function LoginMain() {
-  const [saveId, setSaveId] = React.useState(false);
+  const [saveId, setSaveId] = useState(false);
+  const [inputId, setInputId] = useState('');
+  const [inputPw, setInputPw] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleChangeId = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    setInputId(value);
+  };
+
+  const handleChangePw = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    setInputPw(value);
+  };
+
+  const handleLogin = async () => {
+    const success = await login({ id: inputId, password: inputPw });
+    if (success) {
+      navigate('/main');
+    }
+  };
 
   return (
     <>
@@ -17,11 +43,23 @@ export default function LoginMain() {
 
       <section className="id-password">
         <div className="form-floating">
-          <input type="id" className="form-control" id="idInput" placeholder="비밀번호" />
+          <input
+            type="id"
+            className="form-control"
+            id="idInput"
+            placeholder="아이디"
+            onChange={handleChangeId}
+          />
           <label htmlFor="idInput">아이디</label>
         </div>
         <div className="form-floating">
-          <input type="password" className="form-control" id="passwdInput" placeholder="비밀번호" />
+          <input
+            type="password"
+            className="form-control"
+            id="passwdInput"
+            placeholder="비밀번호"
+            onChange={handleChangePw}
+          />
           <label htmlFor="passwdInput">비밀번호</label>
         </div>
 
@@ -46,6 +84,7 @@ export default function LoginMain() {
             variant="primary"
             size="lg"
             style={{ backgroundColor: '#FFB800', color: 'white', border: 'none' }}
+            onClick={handleLogin}
           >
             로그인
           </Button>
@@ -54,7 +93,9 @@ export default function LoginMain() {
 
       <section className="wanna-join">
         <div>
-          <Link to="./join" style={{ color: '#DDDBD6' }}>회원가입</Link>
+          <Link to="./join" style={{ color: '#DDDBD6' }}>
+            회원가입
+          </Link>
         </div>
       </section>
     </>

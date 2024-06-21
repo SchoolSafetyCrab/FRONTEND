@@ -1,33 +1,58 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { useAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import '@styles/join/Verification.css';
 
+import sendAuthCode from '../../api/join/SendAuthCodeApi';
+import checkCode from '../../api/join/CheckAuthCodeApi';
+import { phoneNumberAtom } from '../../store/join/joinstore';
+
 export default function Verification() {
   const navigate = useNavigate();
-  const [isNumberDisabled, setIsNumberDisabled] = React.useState(true);
-  const [isAuthDisabled, setIsAuthDisabled] = React.useState(true);
-  const [password, setPassword] = React.useState(false);
+  const [isNumberDisabled, setIsNumberDisabled] = useState(true);
+  const [isAuthDisabled, setIsAuthDisabled] = useState(true);
+  const [password, setPassword] = useState(false);
+  const [inputPhoneNumber, setInputPhoneNumber] = useState('');
+  const [inputAuthCode, setInputAuthCode] = useState('');
+
+  const [, setPhoneNumber] = useAtom(phoneNumberAtom);
 
   const handlePhoneNumber = (event: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = event;
 
-    setIsNumberDisabled(value.length !== 11);
+    if (value.length === 11) {
+      setInputPhoneNumber(value);
+      setIsNumberDisabled(false);
+    } else {
+      setInputPhoneNumber('');
+      setIsNumberDisabled(true);
+    }
   };
   const handleAuthNumber = (event: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = event;
 
+    setInputAuthCode(value);
     setIsAuthDisabled(value.length === 0);
   };
-  const handlePW = () => {
-    setPassword(true);
+  const handlePW = async () => {
+    const formatted = `${inputPhoneNumber.slice(0, 3)}-${inputPhoneNumber.slice(3, 7)}-${inputPhoneNumber.slice(7)}`;
+    const success = await sendAuthCode({ phoneNumber: formatted });
+
+    setPassword(success);
   };
-  const handleNext = () => {
-    navigate('/join/id-and-pw');
+  const handleNext = async () => {
+    const formatted = `${inputPhoneNumber.slice(0, 3)}-${inputPhoneNumber.slice(3, 7)}-${inputPhoneNumber.slice(7)}`;
+
+    const isValid = await checkCode({ phoneNumber: formatted, authCode: inputAuthCode });
+    if (isValid) {
+      setPhoneNumber(formatted);
+      navigate('/join/id-and-pw');
+    }
   };
 
   return (

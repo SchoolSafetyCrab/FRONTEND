@@ -2,30 +2,58 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, ChangeEvent } from 'react';
 import Button from 'react-bootstrap/Button';
 import profile from '@assets/images/profile.svg';
+import profile1 from '@assets/images/profile/profile1.svg';
+import profile2 from '@assets/images/profile/profile2.svg';
+import profile3 from '@assets/images/profile/profile3.svg';
+import profile4 from '@assets/images/profile/profile4.svg';
+import profile5 from '@assets/images/profile/profile5.svg';
+import profile6 from '@assets/images/profile/profile6.svg';
 import '@styles/join/JoinProfile.css';
+import { useAtom } from 'jotai';
+import { iconImgAtom, nicknameAtom } from '../../store/join/joinstore';
 
 export default function JoinProfile() {
   const navigate = useNavigate();
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isProfileSelectVisible, setProfileSelectVisible] = useState(false);
+  const [isSelectImg, setIsSelectImg] = useState(false);
+  const [selectedProfileImage, setSelectedProfileImage] = useState(profile);
+  const [inputNickname, setInputNickname] = useState('');
+  const [, setNickname] = useAtom(nicknameAtom);
+  const [, setImg] = useAtom(iconImgAtom);
 
   const handleNext = () => {
+    setNickname(inputNickname);
     navigate('/join/identity');
   };
 
   const handleImageClick = () => {
     setProfileSelectVisible(true);
   };
-  const handleImageClickBlock = () => {
+
+  const handleImageClickBlock = (selectedImage: string) => {
+    setSelectedProfileImage(selectedImage);
+    setImg(selectedImage);
+    setIsSelectImg(true);
     setProfileSelectVisible(false);
+
+    if (inputNickname.length !== 0) {
+      setIsNextDisabled(false);
+    } else {
+      setIsNextDisabled(true);
+    }
   };
 
   const handleChangeNickname = (event: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = event;
-
-    setIsNextDisabled(value.length === 0);
+    setInputNickname(value);
+    if (value.length !== 0 && isSelectImg) {
+      setIsNextDisabled(false);
+    } else {
+      setIsNextDisabled(true);
+    }
   };
 
   return (
@@ -47,7 +75,7 @@ export default function JoinProfile() {
             onClick={handleImageClick}
           >
             <img
-              src={profile}
+              src={selectedProfileImage}
               alt="프로필 이미지"
               aria-label="프로필 이미지 선택"
               style={{ border: 'none' }}
@@ -92,10 +120,10 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={handleImageClickBlock}
+            onClick={() => handleImageClickBlock(profile1)}
           >
             <img
-              src={profile}
+              src={profile1}
               alt="프로필 이미지"
               aria-label="프로필 이미지 선택"
               style={{ border: 'none' }}
@@ -106,10 +134,10 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={handleImageClickBlock}
+            onClick={() => handleImageClickBlock(profile2)}
           >
             <img
-              src={profile}
+              src={profile2}
               alt="프로필 이미지"
               aria-label="프로필 이미지 선택"
               style={{ border: 'none' }}
@@ -121,10 +149,10 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={handleImageClickBlock}
+            onClick={() => handleImageClickBlock(profile3)}
           >
             <img
-              src={profile}
+              src={profile3}
               alt="프로필 이미지"
               aria-label="프로필 이미지 선택"
               style={{ border: 'none' }}
@@ -134,10 +162,10 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={handleImageClickBlock}
+            onClick={() => handleImageClickBlock(profile4)}
           >
             <img
-              src={profile}
+              src={profile4}
               alt="프로필 이미지"
               aria-label="프로필 이미지 선택"
               style={{ border: 'none' }}
@@ -149,10 +177,10 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={handleImageClickBlock}
+            onClick={() => handleImageClickBlock(profile5)}
           >
             <img
-              src={profile}
+              src={profile5}
               alt="프로필 이미지"
               aria-label="프로필 이미지 선택"
               style={{ border: 'none' }}
@@ -162,10 +190,10 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={handleImageClickBlock}
+            onClick={() => handleImageClickBlock(profile6)}
           >
             <img
-              src={profile}
+              src={profile6}
               alt="프로필 이미지"
               aria-label="프로필 이미지 선택"
               style={{ border: 'none' }}

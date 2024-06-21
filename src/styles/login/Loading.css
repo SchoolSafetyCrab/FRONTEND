@@ -7,3 +7,6 @@
   margin: 0; /* 기본 margin을 제거 */
 }
 
+.loading >img {
+  width: 100%;
+}
