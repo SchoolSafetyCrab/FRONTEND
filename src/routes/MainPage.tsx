@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAtom } from 'jotai';
 import Button from 'react-bootstrap/Button';
-import disActiveDeclarationBtn from '@assets/images/main/disActiveDeclarationBtn.svg';
-import activeDeclarationBtn from '@assets/images/main/activedeclarationBtn.svg';
+import disActiveDeclarationBtn from '@assets/images/main/disActiveDeclarationButton.svg';
+import activeDeclarationBtn from '@assets/images/main/activeDeclarationButton.svg';
 
 import HomePage from '@pages/homePage/HomePage';
 import MyPage from '@pages/mypagePage/MyPage';

@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import React, { useEffect, useState } from 'react';
+
 import {
   latlongDeclarationAtom,
   isDeclarationAtom,
@@ -25,11 +26,22 @@ const MapBox = () => {
     };
     var map = new window.kakao.maps.Map(container, options);
 
+    var imageSrc = require("../../assets/images/main/declarationMarker.png");
+    var imageSize = new window.kakao.maps.Size(30, 30);
+    var imageOption = { offset: new window.kakao.maps.Point(15, 13) };
+    var markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+    var marker = new window.kakao.maps.Marker({
+      position: map.getCenter(),
+      image: markerImage 
+    });
+
     window.kakao.maps.event.addListener(map, 'click', function (mouseEvent: any) {
       var latlng = mouseEvent.latLng;
       setLatLon({ latitude: latlng.getLat(), longitude: latlng.getLng() });
-      console.log(11);
       setIsDeclaration(false);
+      marker.setPosition(latlng);
+      marker.setMap(map);
     });
   }, []);
 
