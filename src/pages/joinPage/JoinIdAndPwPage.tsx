@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import '@styles/join/JoinIdPw.css';
 import { ChangeEvent, useState } from 'react';
 import checkId from '../../api/join/CheckDuplIdApi';
-import { idAtom, passwordAtom } from '../../store/join/joinstore';
+import { idAtom, passwordAtom } from '../../store/join/Joinstore';
 
 export default function JoinIdAndPw() {
   const [inputId, setInputId] = useState('');
