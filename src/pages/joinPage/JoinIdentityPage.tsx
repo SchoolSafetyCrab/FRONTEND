@@ -7,7 +7,7 @@ import teacherDisActive from '@assets/images/job/disactive/jobTeacherDisActive.s
 
 import studentActive from '@assets/images/job/active/jobStudentActive.svg';
 import parentActive from '@assets/images/job/active/jobParentActive.svg';
-import teacherActive from '@assets/images/job/active/jobTeacherActive.svg';
+import teacherActive from '@assets/images/job/active/jobTeachersActive.svg';
 import '@styles/join/JoinIdDentity.css';
 import { useState } from 'react';
 
