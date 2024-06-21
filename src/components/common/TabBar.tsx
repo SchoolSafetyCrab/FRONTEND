@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '@styles/main/TabBar.module.css';
 import homeIcon from '@assets/images/tab/tab-home.svg';
 import wayIcon from '@assets/images/tab/tab-way.svg';
 import groupIcon from '@assets/images/tab/tab-group.svg';
@@ -8,6 +7,7 @@ import homeIconActive from '@assets/images/tab/tab-home-active.svg';
 import wayIconActive from '@assets/images/tab/tab-way-active.svg';
 import groupIconActive from '@assets/images/tab/tab-group-active.svg';
 import mypageIconActive from '@assets/images/tab/tab-mypage-active.svg';
+import '@styles/main/TabBar.css';
 
 interface TabBarProps {
   activeTab: number;
@@ -24,13 +24,13 @@ const tabs = [
 
 const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabClick }) => {
   return (
-    <div className={styles.tabs}>
-      <div className={styles.tabList}>
+    <div className="tabs">
+      <div className="tabList">
         {tabs.map((tab) => (
           <button
             type="button"
             key={tab.id}
-            className={`${styles.tab} ${activeTab === tab.id ? styles.active : ''}`}
+            className={`tab ${activeTab === tab.id ? 'active' : ''}`}
             onClick={() => onTabClick(tab.id)}
             role="tab"
             aria-selected={activeTab === tab.id}

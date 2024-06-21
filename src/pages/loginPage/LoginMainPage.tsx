@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Checkbox from '@components/common/Checkbox';
 import '@styles/login/LoginMain.css';
@@ -7,7 +7,12 @@ import '@styles/login/LoginMain.css';
 import MainHeader from '@assets/images/MainHeader.svg';
 
 export default function LoginMain() {
+  const navigate = useNavigate();
   const [saveId, setSaveId] = React.useState(false);
+
+  const handleLogin = () => {
+    navigate('/main');
+  };
 
   return (
     <>
@@ -46,6 +51,7 @@ export default function LoginMain() {
             variant="primary"
             size="lg"
             style={{ backgroundColor: '#FFB800', color: 'white', border: 'none' }}
+            onClick={handleLogin}
           >
             로그인
           </Button>
@@ -54,7 +60,9 @@ export default function LoginMain() {
 
       <section className="wanna-join">
         <div>
-          <Link to="./join" style={{ color: '#DDDBD6' }}>회원가입</Link>
+          <Link to="./join" style={{ color: '#DDDBD6' }}>
+            회원가입
+          </Link>
         </div>
       </section>
     </>

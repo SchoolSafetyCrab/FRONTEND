@@ -4,7 +4,6 @@ import MyPage from '@pages/mypagePage/MyPage';
 import GroupPage from '@pages/groupPage/GroupPage';
 import WayPage from '@pages/wayPage/WayPage';
 import styles from '@styles/main/MainPage.module.css';
-import { Container } from 'react-bootstrap';
 import Header from '../components/common/Header';
 import TabBar from '../components/common/TabBar';
 
@@ -25,10 +24,10 @@ export default function MainPage() {
   const ActiveComponent = tabs.find((tab) => tab.id === activeTab)?.component;
 
   return (
-    <Container fluid className={styles.mainContainer}>
+    <div className={styles.mainContainer}>
       <Header title="홈" />
       <div className={styles.content}>{ActiveComponent}</div>
       <TabBar activeTab={activeTab} onTabClick={handleTabClick} />
-    </Container>
+    </div>
   );
 }

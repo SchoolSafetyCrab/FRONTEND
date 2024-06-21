@@ -1,6 +1,6 @@
 :root {
   --header-height: 3rem;
-  --tabbar-height: 3rem;
+  --tabbar-height: 5rem; /* TabBar.module.css의 높이와 일치 */
 }
 
 .mainContainer {
@@ -8,6 +8,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  margin: 0;
+  overflow: hidden;
 }
 
 .content {
@@ -15,5 +17,5 @@
   flex: 1;
   overflow-y: auto;
   margin-top: var(--header-height);
-  margin-bottom: var(--tabbar-height);
+  padding-bottom: var(--tabbar-height); /* 추가된 부분 */
 }
