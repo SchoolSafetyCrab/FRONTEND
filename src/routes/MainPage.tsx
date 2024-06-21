@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAtom } from 'jotai';
 import Button from 'react-bootstrap/Button';
 import disActiveDeclarationBtn from '@assets/images/main/disActiveDeclarationBtn.svg';
 import activeDeclarationBtn from '@assets/images/main/activedeclarationBtn.svg';
@@ -10,6 +11,7 @@ import WayPage from '@pages/wayPage/WayPage';
 import styles from '@styles/main/MainPage.module.css';
 import Header from '../components/common/Header';
 import TabBar from '../components/common/TabBar';
+import { isDeclarationAtom } from '../store/declaration/Declarationstore';
 
 const tabs = [
   { id: 1, title: '회원정보', component: <HomePage /> },
@@ -20,15 +22,15 @@ const tabs = [
 
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState(1);
-  const [isActiveDeclarationBtn] = useState(false);
-  const [isDeclaration, setIsDeclaration] = useState(true);
+  const [isActiveDeclarationBtn, setIsActiveDeclarationBtn] = useState(false);
+  const [isDeclaration] = useAtom(isDeclarationAtom);
 
   const handleTabClick = (id: number) => {
     setActiveTab(id);
   };
 
-  const hadleDeclartion = () => {
-    setIsDeclaration(false);
+  const handleDeclarationBtn = () => {
+    setIsActiveDeclarationBtn(!isActiveDeclarationBtn);
   };
 
   const ActiveComponent = tabs.find((tab) => tab.id === activeTab)?.component;
@@ -62,7 +64,6 @@ export default function MainPage() {
               variant="primary"
               size="lg"
               disabled={isDeclaration}
-              onClick={hadleDeclartion}
               style={{
                 backgroundColor: '#FFB800',
                 color: 'white',
@@ -83,6 +84,7 @@ export default function MainPage() {
               className="login-btn custom-button"
               variant="primary"
               size="lg"
+              onClick={handleDeclarationBtn}
               style={{
                 backgroundColor: 'transparent',
                 padding: '0',
