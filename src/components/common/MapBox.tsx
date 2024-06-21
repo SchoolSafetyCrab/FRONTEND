@@ -1,4 +1,6 @@
+import { useAtom } from 'jotai';
 import React, { useEffect, useState } from 'react';
+import latlongAtom from 'store/main/Mainstore';
 
 /* eslint-disable */
 declare global {
@@ -9,6 +11,7 @@ declare global {
 
 const MapBox = () => {
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
+  const [setLatLon] = useAtom(latlongAtom)
 
   useEffect(() => {
     var container = document.getElementById('map');
