@@ -65,3 +65,45 @@
   justify-content: end;
   right: 0;
 }
+
+.mainPageBtnContainer{
+  width: 100%;
+  height: 10%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 3%;
+}
+.mainPageDeclarationBtn{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 15%;
+}
+.mainPageDeclarationBtnContainer{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  bottom: 8%;
+}
+.mainPageDeclarationBtn > div {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.declarationBtn{
+  z-index: 5;
+}
