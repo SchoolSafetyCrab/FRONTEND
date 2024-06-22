@@ -1,8 +1,14 @@
+import { Route, Routes } from 'react-router-dom';
+import StudentGroupPage from '@pages/group/StudentGroupPage';
+import TeacherGroupPage from '@pages/group/TeacherGroupPage';
+
 export default function GroupPage() {
   return (
-    <div>
-      <h1>Group</h1>
-      <div>group page</div>
+    <div className="group-container">
+      <Routes>
+        <Route path="/student" element={<StudentGroupPage />} />
+        <Route path="/teacher" element={<TeacherGroupPage />} />
+      </Routes>
     </div>
   );
 }

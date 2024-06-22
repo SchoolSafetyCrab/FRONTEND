@@ -1,0 +1,31 @@
+.search-bar {
+  position: relative;
+  width: 100%;
+}
+
+.search-bar input {
+  width: 100%;
+  padding-right: 40px; /* 버튼 공간 확보 */
+  box-sizing: border-box; /* 패딩을 포함한 전체 너비 계산 */
+  background-color: #f3f2ee;
+  border: 0;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.5rem;
+}
+
+.search-bar button {
+  position: absolute;
+  right: 5px; /* 버튼의 오른쪽 위치 조정 */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.search-bar button img {
+  width: 1rem; /* 아이콘 크기 조정 */
+}

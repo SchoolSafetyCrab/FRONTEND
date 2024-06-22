@@ -17,7 +17,7 @@ function App() {
               <Route path="/" element={<LoginPage />} />
               <Route path="/join/*" element={<JoinPage />} />
               <Route path="/home" element={<HomePage />} />
-              <Route path="/group" element={<GroupPage />} />
+              <Route path="/group/*" element={<GroupPage />} />
               <Route path="/mypage/*" element={<MyPage />} />
               <Route path="/way" element={<WayPage />} />
             </Routes>
