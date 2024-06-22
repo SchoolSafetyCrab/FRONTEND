@@ -19,7 +19,7 @@ import {
   nicknameAtom,
   iconImgAtom,
   phoneNumberAtom,
-} from '../../store/join/Joinstore';
+} from '../../store/join/Joinsstore';
 
 export default function JoinIdentity() {
   const [activeStudent, setActiveStudent] = useState(false);

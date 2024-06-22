@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Col, Row, Container } from 'react-bootstrap';
+import MyPage from '@routes/Mypage';
 import JoinPage from './routes/JoinPage';
 import LoginPage from './routes/LoginPage';
 import MainPage from './routes/MainPage';
@@ -13,6 +14,7 @@ function App() {
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/join/*" element={<JoinPage />} />
+              <Route path="/mypage/*" element={<MyPage />} />
               <Route path="/main" element={<MainPage />} />
             </Routes>
           </Router>

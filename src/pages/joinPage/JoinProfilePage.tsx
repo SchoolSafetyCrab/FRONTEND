@@ -10,7 +10,7 @@ import profile5 from '@assets/images/profile/profile5.svg';
 import profile6 from '@assets/images/profile/profile6.svg';
 import '@styles/join/JoinProfile.css';
 import { useAtom } from 'jotai';
-import { iconImgAtom, nicknameAtom } from '../../store/join/Joinstore';
+import { iconImgAtom, nicknameAtom } from '../../store/join/Joinsstore';
 
 export default function JoinProfile() {
   const navigate = useNavigate();
