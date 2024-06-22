@@ -8,10 +8,12 @@ import HomePage from '@pages/homePage/HomePage';
 import MyPage from '@pages/mypagePage/MyPage';
 import GroupPage from '@pages/groupPage/GroupPage';
 import WayPage from '@pages/wayPage/WayPage';
+import MainDeclarationBoard from '@components/main/MainDeclarationBoard';
+
 import styles from '@styles/main/MainPage.module.css';
 import Header from '../components/common/Header';
 import TabBar from '../components/common/TabBar';
-import { isDeclarationAtom } from '../store/declaration/Declarationstore';
+import { isActiveDeclarationBtnAtom, isBoardVisibleAtom, isDeclarationAtom } from '../store/declaration/Declarationstore';
 
 const tabs = [
   { id: 1, title: '회원정보', component: <HomePage /> },
@@ -22,15 +24,21 @@ const tabs = [
 
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState(1);
-  const [isActiveDeclarationBtn, setIsActiveDeclarationBtn] = useState(false);
+  const [isActiveDeclarationBtn, setIsActiveDeclarationBtn] = useAtom(isActiveDeclarationBtnAtom);
   const [isDeclaration] = useAtom(isDeclarationAtom);
+  const [, setIsBoardVisible] = useAtom(isBoardVisibleAtom);
 
+  console.log(isActiveDeclarationBtn);
   const handleTabClick = (id: number) => {
     setActiveTab(id);
   };
 
   const handleDeclarationBtn = () => {
     setIsActiveDeclarationBtn(!isActiveDeclarationBtn);
+  };
+
+  const handleDeclarationBoard = () => {
+    setIsBoardVisible(true);
   };
 
   const ActiveComponent = tabs.find((tab) => tab.id === activeTab)?.component;
@@ -64,6 +72,7 @@ export default function MainPage() {
               variant="primary"
               size="lg"
               disabled={isDeclaration}
+              onClick={handleDeclarationBoard}
               style={{
                 backgroundColor: '#FFB800',
                 color: 'white',
@@ -108,6 +117,7 @@ export default function MainPage() {
         {ActiveComponent}
       </div>
       <TabBar activeTab={activeTab} onTabClick={handleTabClick} />
+      <MainDeclarationBoard />
     </div>
   );
 }
