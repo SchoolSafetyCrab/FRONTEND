@@ -1,0 +1,49 @@
+:root {
+  --tabbar-height: 5rem;
+}
+
+.tabs {
+  width: 100%;
+  height: 15%;
+  background-color: #fff4ba;
+
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13% 13% 0 0;
+}
+
+.tabList {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem 0;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  width: 25%;
+  height: 100%;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.tab img {
+  width: 40%;
+  height: 40%;
+  margin-bottom: 0.5rem;
+}
+.tab > div {
+  font-size: 0.6rem;
+}
