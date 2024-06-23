@@ -3,6 +3,7 @@ import axios from 'axios';
 import API_BASE_URL from '../Apiconfig';
 
 interface UserInfo {
+  id: string;
   nickName: string;
   userImg: string;
   role: string;
@@ -12,6 +13,7 @@ const findUserInfo = async (): Promise<UserInfo | null> => {
   try {
     const response = await axios.get(`${API_BASE_URL}api/user`);
     const userData: UserInfo = {
+      id: response.data.data.id,
       nickName: response.data.data.nickName,
       userImg: response.data.data.userImg,
       role: response.data.data.role,

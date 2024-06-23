@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
+import { setDoc, doc } from 'firebase/firestore';
+
 import Button from 'react-bootstrap/Button';
 import disActiveDeclarationBtn from '@assets/images/main/disActiveDeclarationButton.svg';
 import MainSafetyBoard from '@components/main/MainSafetyBoard';
-
 import activeDeclarationBtn from '@assets/images/main/activeDeclarationButton.svg';
 // import ReportWhite from '@assets/images/home/report-white.svg';
 import styles from '@styles/home/HomePage.module.css';
 import MapBox from '../../components/common/MapBox';
+import db from '../../firebase';
 
 import {
   isActiveDeclarationBtnAtom,
   isBoardVisibleAtom,
   isDeclarationAtom,
 } from '../../store/declaration/Declarationstore';
-import isStartGotoSchoolAtom from '../../store/home/Homestore';
 import pointAtom from '../../store/home/point/Pointsotre';
 import findUserInfo from '../../api/user/userInfo';
 import userInfoAtom from '../../store/userInfo/UserInfo';
@@ -23,9 +24,9 @@ export default function HomePage() {
   const [, setIsBoardVisible] = useAtom(isBoardVisibleAtom);
   const [isActiveDeclarationBtn, setIsActiveDeclarationBtn] = useAtom(isActiveDeclarationBtnAtom);
   const [isDeclaration] = useAtom(isDeclarationAtom);
-  const [isStartGotoSchool, setIsStartGotoSchool] = useAtom(isStartGotoSchoolAtom);
-  const [, setPoint] = useAtom(pointAtom);
-  const [, setUserInfo] = useAtom(userInfoAtom);
+  const [isStartGotoSchool, setIsStartGotoSchool] = useState(false);
+  const [point, setPoint] = useAtom(pointAtom);
+  const [userInfo, setUserInfo] = useAtom(userInfoAtom);
 
   const handleDeclarationBtn = () => {
     setIsActiveDeclarationBtn(!isActiveDeclarationBtn);
@@ -81,6 +82,44 @@ export default function HomePage() {
       setPoint({ latitude: 0, longitude: 0 });
     }
   }, []);
+
+  useEffect(() => {
+    const saveMyPoint = async () => {
+      const docRef = doc(db, 'users', userInfo.id);
+      const data = {
+        latitude: point.latitude,
+        longitude: point.longitude,
+      };
+      try {
+        // Firestore의 'users' 컬렉션에 새로운 문서를 추가합니다.
+        await setDoc(docRef, data);
+      } catch (error) {
+        console.error('Error adding document: ', error); // 에러가 발생하면 콘솔에 출력합니다.
+      }
+    };
+    const saveBlockMyPoint = async () => {
+      try {
+        const docRef = doc(db, 'users', userInfo.id);
+        const data = {
+          latitude: 0,
+          longitude: 0,
+        };
+        try {
+          // Firestore의 'users' 컬렉션에 새로운 문서를 추가합니다.
+          await setDoc(docRef, data);
+        } catch (error) {
+          console.error('Error adding document: ', error); // 에러가 발생하면 콘솔에 출력합니다.
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    if (isStartGotoSchool) {
+      saveMyPoint();
+    } else {
+      saveBlockMyPoint();
+    }
+  }, [isStartGotoSchool, point]);
 
   return (
     <div className={styles.pageContainer}>
