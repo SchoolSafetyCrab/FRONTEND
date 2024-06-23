@@ -38,7 +38,7 @@ export default function GroupBox() {
 
   return (
     <div className="box-container">
-      <div className="name-div">
+      <div className="group-name-div">
         <div className="school-div">
           <img src={School} alt="학교 아이콘" />
           <h3>한밭 초등학교</h3>

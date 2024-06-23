@@ -9,11 +9,11 @@
   flex-direction: column;
 }
 
-.name-div {
+.group-name-div {
   height: 60%;
 }
 
-.name-div > h3 {
+.group-name-div > h3 {
   font-size: 0.8rem;
   margin-top: 1rem;
 }

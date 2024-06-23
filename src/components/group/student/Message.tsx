@@ -10,6 +10,7 @@ export default function Message() {
         <p>2024.06.09</p>
       </div>
       <div className="content-div">
+        <h1>육교 보수공사 조심!</h1>
         <p>
           안녕 친구들! 유미 선생님이에요 오늘 학교 앞 육교에서 보수 공사를 진행한다고 하니 모두들
           조심해서 하교하길 바랄게요~
