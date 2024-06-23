@@ -4,6 +4,7 @@ export default function DisActiveGroup() {
   return (
     <div
       style={{
+        height: '100px',
         backgroundColor: 'white',
         border: '2px solid #DDDBD6',
         borderRadius: '20px',

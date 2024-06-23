@@ -1,3 +1,4 @@
+import React from 'react';
 import ActiveGroup from '@components/group/student/ActiveGroup';
 import DisActiveGroup from '@components/group/student/DisActiveGroup';
 import '@styles/group/StudentGroup.css';

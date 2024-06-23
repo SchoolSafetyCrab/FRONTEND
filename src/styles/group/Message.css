@@ -16,23 +16,25 @@
   width: 100%;
   height: 30%;
   align-items: center;
+  justify-content: center;
 }
 
 .teacher-profile-div > img {
-  width: 2rem;
-  margin-right: 0.5rem;
+  width: 1.2rem;
+  margin-right: 0.3rem;
   border: 0;
   border-radius: 50%;
 }
 
 .teacher-profile-div > h3 {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
 .teacher-profile-div > p {
   margin-right: 0;
   margin-left: auto;
+  font-size: 0.6rem;
 }
 
 .content-div {
@@ -40,6 +42,9 @@
 }
 
 .content-div > h1 {
-  font-size: 1.1rem;
+  font-size: 0.7rem;
   font-weight: 600;
+}
+.content-div > p {
+  font-size: 0.6rem;
 }

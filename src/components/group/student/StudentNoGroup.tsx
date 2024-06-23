@@ -14,7 +14,7 @@ export default function StudentNoGroup() {
       }}
     >
       <img src={Jellyfish} alt="해파리" style={{ width: '50%' }} />
-      <h1 style={{ fontSize: '1.5rem', marginTop: '2rem' }}>아직 가입한 그룹이 없어요.</h1>
+      <h1 style={{ fontSize: '1.2rem', marginTop: '2rem' }}>아직 가입한 그룹이 없어요.</h1>
     </div>
   );
 }
