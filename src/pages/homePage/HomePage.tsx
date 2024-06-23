@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import Button from 'react-bootstrap/Button';
 import disActiveDeclarationBtn from '@assets/images/main/disActiveDeclarationButton.svg';
@@ -14,11 +14,15 @@ import {
   isBoardVisibleAtom,
   isDeclarationAtom,
 } from '../../store/declaration/Declarationstore';
+import isStartGotoSchoolAtom from '../../store/home/Homestore';
+import pointAtom from '../../store/home/point/Pointsotre';
 
 export default function HomePage() {
   const [, setIsBoardVisible] = useAtom(isBoardVisibleAtom);
   const [isActiveDeclarationBtn, setIsActiveDeclarationBtn] = useAtom(isActiveDeclarationBtnAtom);
   const [isDeclaration] = useAtom(isDeclarationAtom);
+  const [isStartGotoSchool, setIsStartGotoSchool] = useAtom(isStartGotoSchoolAtom);
+  const [, setPoint] = useAtom(pointAtom);
 
   const handleDeclarationBtn = () => {
     setIsActiveDeclarationBtn(!isActiveDeclarationBtn);
@@ -27,6 +31,40 @@ export default function HomePage() {
   const handleDeclarationBoard = () => {
     setIsBoardVisible(true);
   };
+
+  const handleStartGoToSchool = () => {
+    setIsStartGotoSchool(!isStartGotoSchool);
+  };
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const lat = position.coords.latitude; // 위도
+          const lon = position.coords.longitude; // 경도
+          setPoint({ latitude: lat, longitude: lon });
+        },
+        (error) => {
+          console.error('Error getting geolocation:', error);
+          setPoint({ latitude: 0, longitude: 0 });
+        },
+        options,
+      );
+
+      // 컴포넌트 언마운트 시 위치 감시 정리 (예시로 주석 처리)
+      // return () => navigator.geolocation.clearWatch(watchId);
+    } else {
+      // HTML5의 GeoLocation을 사용할 수 없을 때 기본 위치로 설
+      setPoint({ latitude: 0, longitude: 0 });
+    }
+  }, []);
+
   return (
     <div className={styles.pageContainer}>
       <section className={styles.mapContainer}>
@@ -37,6 +75,7 @@ export default function HomePage() {
                 className="login-btn custom-button"
                 variant="primary"
                 size="lg"
+                onClick={handleStartGoToSchool}
                 style={{
                   backgroundColor: '#FFB800',
                   color: 'white',
