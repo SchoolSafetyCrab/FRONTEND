@@ -3,6 +3,17 @@ import API_BASE_URL from '../Apiconfig';
 
 const ACCESS_TOKEN = 'Access_token';
 
+const accessToken = localStorage.getItem(ACCESS_TOKEN);
+
+const headers = new Headers({
+  'Content-Type': 'application/json',
+});
+
+if (accessToken && accessToken !== '') {
+  headers.append('Authorization', accessToken);
+  axios.defaults.headers.common.Authorization = `${accessToken}`;
+}
+
 // 인터페이스 정의
 interface UserDto {
   id: string;

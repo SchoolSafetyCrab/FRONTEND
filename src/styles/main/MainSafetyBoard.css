@@ -1,0 +1,97 @@
+/* section */
+.mainSafetyContainer{
+    position: absolute;
+  
+    width: 100%;
+    height: 50%;
+    bottom: -41%;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+}
+
+.mainSafety{
+    width: 80%;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 16px 16px 0 0;
+}
+/*mainSafetyHeader*/
+.mainSafetyHeader{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    position: relative;
+}
+
+/*selectSafetyContainer*/
+.selectSafetyContainer{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.selecetSafety{
+    width: 80%;
+    height: 100%;
+    background-color: #FFF4BA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.selecetSafety > button {
+    width: 42%;
+    height: 80%;
+    border: none;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+
+/*selectIcon*/
+.selectIcon {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+.select {
+    width: 80%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.select:nth-child(1) > button {
+    width: 25%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+.select:nth-child(2) > button {
+    width: 30%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+.select > button > img {
+    width: 100%;
+    height: 50%
+}
+.select > button > p {
+    width: 100%;
+    height: 30%;
+    margin: 0;
+    font-size: 0.6rem;
+    font-weight: 500;
+}

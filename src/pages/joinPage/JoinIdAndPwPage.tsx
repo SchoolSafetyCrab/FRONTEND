@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useAtom } from 'jotai';
-
+import { idAtom, passwordAtom } from '../../store/join/Joinsstore';
 import '@styles/join/JoinIdPw.css';
-import { ChangeEvent, useState } from 'react';
 import checkId from '../../api/join/CheckDuplIdApi';
-import { idAtom, passwordAtom } from '../../store/join/joinstore';
 
 export default function JoinIdAndPw() {
   const [inputId, setInputId] = useState('');

@@ -6,7 +6,7 @@ import '@styles/join/Verification.css';
 
 import sendAuthCode from '../../api/join/SendAuthCodeApi';
 import checkCode from '../../api/join/CheckAuthCodeApi';
-import { phoneNumberAtom } from '../../store/join/joinstore';
+import { phoneNumberAtom } from '../../store/join/Joinsstore';
 
 export default function Verification() {
   const navigate = useNavigate();

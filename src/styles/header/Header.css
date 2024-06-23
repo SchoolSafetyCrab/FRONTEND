@@ -1,0 +1,12 @@
+.header {
+    height: 13%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+}
+
+.header > h1 {
+    font-size: 1.8rem;
+    font-weight: 500;
+}
