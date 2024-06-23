@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Col, Row, Container } from 'react-bootstrap';
+import GroupPage from '@routes/GroupPage';
+import MyPage from '@routes/Mypage';
 import JoinPage from './routes/JoinPage';
 import LoginPage from './routes/LoginPage';
-import HomePage from './routes/HomePage';
-import GroupPage from './routes/GroupPage';
-import MyPage from './routes/MyPage';
-import WayPage from './routes/WayPage';
+import MainPage from './routes/MainPage';
 
 function App() {
   return (
@@ -16,10 +15,9 @@ function App() {
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/join/*" element={<JoinPage />} />
-              <Route path="/home" element={<HomePage />} />
               <Route path="/group/*" element={<GroupPage />} />
               <Route path="/mypage/*" element={<MyPage />} />
-              <Route path="/way" element={<WayPage />} />
+              <Route path="/main" element={<MainPage />} />
             </Routes>
           </Router>
         </Col>
