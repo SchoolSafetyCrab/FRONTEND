@@ -16,6 +16,8 @@ import {
 } from '../../store/declaration/Declarationstore';
 import isStartGotoSchoolAtom from '../../store/home/Homestore';
 import pointAtom from '../../store/home/point/Pointsotre';
+import findUserInfo from '../../api/user/userInfo';
+import userInfoAtom from '../../store/userInfo/UserInfo';
 
 export default function HomePage() {
   const [, setIsBoardVisible] = useAtom(isBoardVisibleAtom);
@@ -23,6 +25,7 @@ export default function HomePage() {
   const [isDeclaration] = useAtom(isDeclarationAtom);
   const [isStartGotoSchool, setIsStartGotoSchool] = useAtom(isStartGotoSchoolAtom);
   const [, setPoint] = useAtom(pointAtom);
+  const [, setUserInfo] = useAtom(userInfoAtom);
 
   const handleDeclarationBtn = () => {
     setIsActiveDeclarationBtn(!isActiveDeclarationBtn);
@@ -35,6 +38,20 @@ export default function HomePage() {
   const handleStartGoToSchool = () => {
     setIsStartGotoSchool(!isStartGotoSchool);
   };
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const userData = await findUserInfo(); // findUserInfo 함수 호출
+        if (userData) {
+          setUserInfo(userData); // userData를 atom에 설정
+        }
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
+    fetchUserInfo();
+  }, []);
 
   useEffect(() => {
     if (navigator.geolocation) {

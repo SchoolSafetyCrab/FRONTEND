@@ -34,6 +34,15 @@ const MapBox = () => {
     const map = new window.kakao.maps.Map(container, options);
     mapRef.current = map;
 
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var lat = position.coords.latitude, // 위도
+          lon = position.coords.longitude; // 경도
+        var locPosition = new window.kakao.maps.LatLng(lat, lon);
+        map.setCenter(locPosition);
+      });
+    }
+
     const imageSrc = require('../../assets/images/main/declarationMarker.png');
     const imageSize = new window.kakao.maps.Size(30, 30);
     const imageOption = { offset: new window.kakao.maps.Point(15, 13) };
@@ -92,7 +101,6 @@ const MapBox = () => {
       var locPosition = new window.kakao.maps.LatLng(lat, lon);
       marker.setPosition(locPosition);
       marker.setMap(map);
-      map.setCenter(locPosition);  
     } else {
       marker.setMap(null);
     }
