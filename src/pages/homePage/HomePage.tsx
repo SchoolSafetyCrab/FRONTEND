@@ -2,6 +2,8 @@ import React from 'react';
 import { useAtom } from 'jotai';
 import Button from 'react-bootstrap/Button';
 import disActiveDeclarationBtn from '@assets/images/main/disActiveDeclarationButton.svg';
+import MainSafetyBoard from '@components/main/MainSafetyBoard';
+
 import activeDeclarationBtn from '@assets/images/main/activeDeclarationButton.svg';
 // import ReportWhite from '@assets/images/home/report-white.svg';
 import styles from '@styles/home/HomePage.module.css';
@@ -29,23 +31,26 @@ export default function HomePage() {
     <div className={styles.pageContainer}>
       <section className={styles.mapContainer}>
         {isActiveDeclarationBtn ? (
-          <div className={styles.mainPageBtnContainer}>
-            <Button
-              className="login-btn custom-button"
-              variant="primary"
-              size="lg"
-              style={{
-                backgroundColor: '#FFB800',
-                color: 'white',
-                border: 'none',
-                width: '80%',
-                left: '50%',
-                zIndex: '2',
-              }}
-            >
-              등하교 시작
-            </Button>
-          </div>
+          <>
+            <div className={styles.mainPageBtnContainer}>
+              <Button
+                className="login-btn custom-button"
+                variant="primary"
+                size="lg"
+                style={{
+                  backgroundColor: '#FFB800',
+                  color: 'white',
+                  border: 'none',
+                  width: '80%',
+                  left: '50%',
+                  zIndex: '2',
+                }}
+              >
+                등하교 시작
+              </Button>
+            </div>
+            <MainSafetyBoard />
+          </>
         ) : (
           <div className={styles.mainPageDeclarationBtnContainer}>
             <Button
