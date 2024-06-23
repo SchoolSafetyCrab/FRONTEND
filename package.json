@@ -14,6 +14,7 @@
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "craco-alias": "^3.0.1",
+    "firebase": "^10.12.2",
     "jotai": "^2.8.3",
     "jotai-immer": "^0.4.0",
     "prettier": "^3.3.1",
