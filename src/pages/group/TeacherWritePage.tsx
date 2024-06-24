@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import back from '@assets/images/mypage/backarrow.svg';
 import { useState, ChangeEvent } from 'react';
-import '@styles/group/teacher/TeacherNoticePage.css';
+import '@styles/group/teacher/TeacherWritePage.css';
 
 export default function TeacherNoticePage() {
   const navigate = useNavigate();
