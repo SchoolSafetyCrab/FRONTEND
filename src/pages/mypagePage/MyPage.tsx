@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import MyPageMain from '@pages/mypage/MyPageMain';
-import FindGuardianPage from '@pages/mypage/FindGuardianPage';
+import MyPageMain from '@pages/mypagePage/MyPageMain';
+import FindGuardianPage from '@pages/mypagePage/FindGuardianPage';
 
 export default function MyPage() {
   return (

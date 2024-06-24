@@ -1,6 +1,13 @@
 import axios from 'axios';
 import API_BASE_URL from '../Apiconfig';
 
+const accessToken = localStorage.getItem('accessToken');
+
+// 토큰이 있으면 axios의 headers에 Authorization 헤더로 설정
+if (accessToken) {
+  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+}
+
 interface InputGuardianId {
   guardianId: string;
 }
