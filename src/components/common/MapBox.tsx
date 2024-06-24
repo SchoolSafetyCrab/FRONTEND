@@ -38,6 +38,7 @@ const MapBox = () => {
       navigator.geolocation.getCurrentPosition(function (position) {
         var lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
+          console.log(lat);
         var locPosition = new window.kakao.maps.LatLng(lat, lon);
         map.setCenter(locPosition);
       });

@@ -10,8 +10,14 @@ interface UserInfo {
 }
 
 const findUserInfo = async (): Promise<UserInfo | null> => {
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  console.log(accessToken);
   try {
-    const response = await axios.get(`${API_BASE_URL}api/user`);
+    const response = await axios.get(`${API_BASE_URL}api/user`, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    });
     const userData: UserInfo = {
       id: response.data.data.id,
       nickName: response.data.data.nickName,
