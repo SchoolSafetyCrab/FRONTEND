@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Col, Row, Container } from 'react-bootstrap';
-import MyPage from '@pages/mypagePage/MyPage';
+import MyPage from '@routes/Mypage';
 import JoinPage from './routes/JoinPage';
 import LoginPage from './routes/LoginPage';
 import MainPage from './routes/MainPage';
