@@ -3,6 +3,8 @@ import ProfileImg from '@assets/images/profile/profile1.svg';
 import { useNavigate } from 'react-router-dom';
 import '@styles/mypage/Profile.css';
 import getUserInfo from '../../api/user/userInfo';
+import getGroupInfo from '../../api/group/getGroupInfo';
+import { GroupInfo } from '../../interfaces/GroupInfo';
 
 interface UserInfo {
   nickName: string;
@@ -13,6 +15,8 @@ interface UserInfo {
 export default function Profile() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  // eslint-disable-next-line no-unused-vars
+  const [groupData, setGroupData] = useState<GroupInfo[] | null>(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -20,8 +24,13 @@ export default function Profile() {
       setUserInfo(userData);
     };
 
-    console.log(userInfo);
+    const fetchGroupData = async () => {
+      const data = await getGroupInfo();
+      setGroupData(data);
+    };
+
     fetchUserInfo();
+    fetchGroupData();
   }, []);
 
   const handleProfile = () => {
@@ -35,7 +44,11 @@ export default function Profile() {
       </div>
       <div className="name-wrapper">
         <h2>{userInfo?.nickName || '로딩 중...'}</h2>
-        <p>{userInfo ? '한밭초등학교 5학년 2반' : '로딩 중...'}</p>
+        <p>
+          {groupData && groupData.length > 0
+            ? `${groupData[groupData.length - 1].schoolName} ${groupData[groupData.length - 1].schoolYear}학년 ${groupData[groupData.length - 1].schoolBan}반`
+            : '로딩 중...'}
+        </p>
       </div>
       <div className="btn-wrapper">
         <button
