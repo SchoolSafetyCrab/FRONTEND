@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import turtle from '@assets/images/mypage/turtle.svg';
 import back from '@assets/images/mypage/backarrow.svg';
 import { useState, ChangeEvent } from 'react';
-// import changeGuardian from '../../api/mypage/ChangeGuardian';
+import changeGuardian from '../../api/mypage/ChangeGuardian';
 
 export default function FindGuardianPage() {
   const navigate = useNavigate();
   const [inputGuardianId, setInputGuardianId] = useState('');
 
   const handleBack = () => {
-    navigate('/mypage');
+    navigate(-1);
   };
 
   const handleChangeGuardianId = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,13 +21,13 @@ export default function FindGuardianPage() {
   };
 
   const handleConfirm = async () => {
-    navigate('/mypage');
-    // const isSuccess = await changeGuardian({ guardianId: inputGuardianId });
-    // if (isSuccess) {
-    //   navigate('/mypage');
-    // } else {
-    //   console.error('Failed to send Parent ID');
-    // }
+    const isSuccess = await changeGuardian({ guardianId: inputGuardianId });
+    if (isSuccess) {
+      console.log('성공');
+    } else {
+      console.error('Failed to send Parent ID');
+    }
+    navigate(-1);
   };
 
   return (
