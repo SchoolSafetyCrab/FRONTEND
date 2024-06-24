@@ -5,6 +5,7 @@ import {
   isDeclarationAtom,
   isActiveDeclarationBtnAtom,
 } from '../../store/declaration/Declarationstore';
+import pointAtom from '../../store/home/point/Pointsotre';
 
 /* eslint-disable */
 declare global {
@@ -17,9 +18,11 @@ const MapBox = () => {
   const [, setLatLon] = useAtom(latlongDeclarationAtom);
   const [, setIsDeclaration] = useAtom(isDeclarationAtom);
   const [isActiveDeclarationBtn] = useAtom(isActiveDeclarationBtnAtom);
+  const [point] = useAtom(pointAtom);
 
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
+  const myLocationMarkerRef = useRef<any>(null);
   const clickListenerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -31,6 +34,15 @@ const MapBox = () => {
     const map = new window.kakao.maps.Map(container, options);
     mapRef.current = map;
 
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var lat = position.coords.latitude, // 위도
+          lon = position.coords.longitude; // 경도
+        var locPosition = new window.kakao.maps.LatLng(lat, lon);
+        map.setCenter(locPosition);
+      });
+    }
+
     const imageSrc = require('../../assets/images/main/declarationMarker.png');
     const imageSize = new window.kakao.maps.Size(30, 30);
     const imageOption = { offset: new window.kakao.maps.Point(15, 13) };
@@ -40,6 +52,9 @@ const MapBox = () => {
       image: markerImage,
     });
     markerRef.current = marker;
+
+    const myLocationMarker = new window.kakao.maps.Marker({});
+    myLocationMarkerRef.current = myLocationMarker;
   }, []);
 
   useEffect(() => {
@@ -75,6 +90,21 @@ const MapBox = () => {
       }
     }
   }, [isActiveDeclarationBtn, setLatLon, setIsDeclaration]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const marker = myLocationMarkerRef.current;
+    var lat = point.latitude;
+    var lon = point.longitude;
+
+    if (lat !== 0 && lon !== 0) {
+      var locPosition = new window.kakao.maps.LatLng(lat, lon);
+      marker.setPosition(locPosition);
+      marker.setMap(map);
+    } else {
+      marker.setMap(null);
+    }
+  }, [point]);
 
   return <div id="map" style={{ width: '100%', height: '100%', borderRadius: '3% 3%  0 0' }} />;
 };
