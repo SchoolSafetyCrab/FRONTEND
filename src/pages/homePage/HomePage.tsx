@@ -17,8 +17,7 @@ import {
   isDeclarationAtom,
 } from '../../store/declaration/Declarationstore';
 import pointAtom from '../../store/home/point/Pointsotre';
-import findUserInfo from '../../api/user/userInfo';
-import userInfoAtom from '../../store/userInfo/UserInfo';
+import userInfoAtom from '../../store/userInfo/UserFindInfo';
 
 export default function HomePage() {
   const [, setIsBoardVisible] = useAtom(isBoardVisibleAtom);
@@ -26,7 +25,7 @@ export default function HomePage() {
   const [isDeclaration] = useAtom(isDeclarationAtom);
   const [isStartGotoSchool, setIsStartGotoSchool] = useState(false);
   const [point, setPoint] = useAtom(pointAtom);
-  const [userInfo, setUserInfo] = useAtom(userInfoAtom);
+  const [userInfo] = useAtom(userInfoAtom);
 
   const handleDeclarationBtn = () => {
     setIsActiveDeclarationBtn(!isActiveDeclarationBtn);
@@ -41,24 +40,10 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const userData = await findUserInfo(); // findUserInfo 함수 호출
-        if (userData) {
-          setUserInfo(userData); // userData를 atom에 설정
-        }
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-      }
-    };
-    fetchUserInfo();
-  }, []);
-
-  useEffect(() => {
     if (navigator.geolocation) {
       const options = {
         enableHighAccuracy: true,
-        timeout: 5000,
+        timeout: 500,
         maximumAge: 0,
       };
 
@@ -71,6 +56,7 @@ export default function HomePage() {
         (error) => {
           console.error('Error getting geolocation:', error);
           setPoint({ latitude: 0, longitude: 0 });
+          window.location.reload();
         },
         options,
       );
@@ -84,7 +70,9 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    if (userInfo.id === '') return;
     const saveMyPoint = async () => {
+      console.log(userInfo.id);
       const docRef = doc(db, 'users', userInfo.id);
       const data = {
         latitude: point.latitude,
