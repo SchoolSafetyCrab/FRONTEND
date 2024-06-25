@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAtom } from 'jotai';
 import homeIcon from '@assets/images/tab/tab-home.svg';
 import wayIcon from '@assets/images/tab/tab-way.svg';
 import groupIcon from '@assets/images/tab/tab-group.svg';
@@ -8,6 +9,7 @@ import wayIconActive from '@assets/images/tab/tab-way-active.svg';
 import groupIconActive from '@assets/images/tab/tab-group-active.svg';
 import mypageIconActive from '@assets/images/tab/tab-mypage-active.svg';
 import '@styles/main/TabBar.css';
+import userInfoAtom from '../../store/userInfo/UserFindInfo';
 
 interface TabBarProps {
   activeTab: number;
@@ -15,14 +17,21 @@ interface TabBarProps {
   onTabClick: (id: number) => void;
 }
 
-const tabs = [
-  { id: 1, title: '홈', icon: homeIcon, activeIcon: homeIconActive },
-  { id: 2, title: '안전등하굣길', icon: wayIcon, activeIcon: wayIconActive }, // 예시용으로 같은 아이콘 사용
-  { id: 3, title: '그룹조회', icon: groupIcon, activeIcon: groupIconActive },
-  { id: 4, title: '마이페이지', icon: mypageIcon, activeIcon: mypageIconActive },
-];
-
 const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabClick }) => {
+  const [userInfo] = useAtom(userInfoAtom);
+
+  const tabs = [
+    { id: 1, title: '홈', icon: homeIcon, activeIcon: homeIconActive },
+    { id: 2, title: '안전등하굣길', icon: wayIcon, activeIcon: wayIconActive }, // 예시용으로 같은 아이콘 사용
+    {
+      id: 3,
+      title: userInfo.role === 'ROLE_PARENTS' ? '자식조회' : '그룹조회',
+      icon: groupIcon,
+      activeIcon: groupIconActive,
+    },
+    { id: 4, title: '마이페이지', icon: mypageIcon, activeIcon: mypageIconActive },
+  ];
+
   return (
     <div className="tabs">
       <div className="tabList">
