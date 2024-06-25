@@ -1,6 +1,6 @@
 import React from 'react';
 import '@styles/groupChildrenPage/GroupChildrenPage.css';
-import MapBox from '@components/common/MapBox';
+import MapBoxParent from '@components/common/MapBoxParents';
 import GroupChildrenFind from './GroupChildrenFind';
 
 export default function GroupChildrenPage() {
@@ -9,7 +9,7 @@ export default function GroupChildrenPage() {
       <section className="groupChildrenHeader">
         <GroupChildrenFind />
       </section>
-      <MapBox />
+      <MapBoxParent />
     </section>
   );
 }

@@ -24,29 +24,12 @@ interface LatLong {
   longitude: string;
   img: string;
 }
+
 export default function GroupChildrenFind() {
   const [childrenData, setChildrenData] = useState<Children[]>([]);
   const [, setChildrenLocation] = useAtom(childrenLocationAtom);
-
-  const findChildLocation = (id: string, img: string) => {
-    try {
-      const docRef = doc(db, 'users', id);
-      onSnapshot(docRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          const { latitude, longitude } = data; // 필드 접근 시 객체 구조 분해 사용
-          const child: LatLong = {
-            latitude,
-            longitude,
-            img,
-          };
-          setChildrenLocation(child);
-        }
-      });
-    } catch (error) {
-      console.error('Error fetching document:', error);
-    }
-  };
+  const [clickedChild, setClickedChild] = useState<{ id: string; img: string } | null>(null);
+  const [unsubscribeSnapshot, setUnsubscribeSnapshot] = useState<(() => void) | null>(null);
 
   useEffect(() => {
     const fetchChildrenData = async () => {
@@ -62,6 +45,46 @@ export default function GroupChildrenFind() {
     fetchChildrenData();
   }, []);
 
+  const findChildLocation = (id: string, img: string) => {
+    setClickedChild({ id, img });
+  };
+
+  useEffect(() => {
+    if (unsubscribeSnapshot) {
+      unsubscribeSnapshot(); // Unsubscribe previous snapshot listener
+      setUnsubscribeSnapshot(null); // Clear unsubscribe function
+    }
+
+    if (clickedChild) {
+      const { id, img } = clickedChild;
+      try {
+        const docRef = doc(db, 'users', id);
+        const unsubscribe = onSnapshot(docRef, (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.data();
+            const { latitude, longitude } = data; // 필드 접근 시 객체 구조 분해 사용
+            const child: LatLong = {
+              latitude,
+              longitude,
+              img,
+            };
+            setChildrenLocation(child);
+
+            if (latitude === 0 && longitude === 0) {
+              alert('자식 위치를 찾을 수 없어요!!');
+              unsubscribe(); // Unsubscribe current snapshot listener
+              setUnsubscribeSnapshot(null); // Clear unsubscribe function
+            }
+          }
+        });
+
+        setUnsubscribeSnapshot(() => unsubscribe); // Save unsubscribe function
+      } catch (error) {
+        console.error('Error fetching document:', error);
+      }
+    }
+  }, [clickedChild]);
+
   return (
     <div className="groupChildrenFindContainer">
       {childrenData.map((child) => (
@@ -69,7 +92,7 @@ export default function GroupChildrenFind() {
           type="button"
           key={child.userId}
           onClick={() => findChildLocation(child.id, child.userImg)}
-          className="childInfo"
+          className={`childInfo ${clickedChild && clickedChild.id === child.id ? 'clicked' : ''}`}
         >
           {child.userImg === '1' && (
             <img src={profile1} alt={child.nickName} className="childImg" />
