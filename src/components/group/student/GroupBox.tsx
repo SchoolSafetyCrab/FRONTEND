@@ -1,11 +1,20 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from 'react';
 import School from '@assets/images/group/school.svg';
 import People from '@assets/images/group/people.svg';
 import '@styles/group/GroupBox.css';
 
-export default function GroupBox() {
+interface GroupBoxProps {
+  schoolName: string;
+  schoolYear: number;
+  schoolBan: number;
+  state: boolean;
+}
+
+const GroupBox: React.FC<GroupBoxProps> = ({ schoolName, schoolYear, schoolBan, state }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputPassword, setInputPassword] = useState('');
+
   // eslint-disable-next-line no-unused-vars
   const [isPasswordCorrect, setIsPasswordCorrect] = useState<boolean | null>(null);
 
@@ -41,13 +50,15 @@ export default function GroupBox() {
       <div className="group-name-div">
         <div className="school-div">
           <img src={School} alt="학교 아이콘" />
-          <h3>한밭 초등학교</h3>
+          <h3>{schoolName}</h3>
         </div>
-        <h1>3학년 2반</h1>
+        <h1>
+          {schoolYear}학년 {schoolBan}반
+        </h1>
       </div>
       <div className="people-div">
         <img src={People} alt="사람 아이콘" />
-        <h3>26/32</h3>
+        <h3>{state ? '가입 가능' : '가입 불가'}</h3>
       </div>
       <div className="button-div">
         <button type="button" onClick={handleModalOpen}>
@@ -83,4 +94,6 @@ export default function GroupBox() {
       )}
     </div>
   );
-}
+};
+
+export default GroupBox;
