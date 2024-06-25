@@ -9,7 +9,7 @@ import getGroupInfo from '../../api/group/getGroupInfo';
 
 type GroupStatus = 'inGroup' | 'noGroup' | 'searching' | null;
 
-const groupsAtom = atom<any[]>([]);
+export const groupsAtom = atom<any[]>([]);
 
 const StudentGroupPage: React.FC = () => {
   const [groupStatus, setGroupStatus] = useState<GroupStatus>(null);
