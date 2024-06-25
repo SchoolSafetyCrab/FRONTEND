@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
-import ProfileImg from '@assets/images/profile/profile1.svg';
 import { useNavigate } from 'react-router-dom';
 import '@styles/mypage/Profile.css';
+
+import profile1 from '@assets/images/profile/profile1.svg';
+import profile2 from '@assets/images/profile/profile2.svg';
+import profile3 from '@assets/images/profile/profile3.svg';
+import profile4 from '@assets/images/profile/profile4.svg';
+import profile5 from '@assets/images/profile/profile5.svg';
+import profile6 from '@assets/images/profile/profile6.svg';
 import getUserInfo from '../../api/user/UserFindInfo';
 import getGroupInfo from '../../api/group/getGroupInfo';
 import { GroupInfo } from '../../interfaces/GroupInfo';
@@ -39,7 +45,12 @@ export default function Profile() {
   return (
     <div className="profile-wrapper">
       <div className="img-wrapper">
-        <img src={userInfo?.userImg || ProfileImg} alt="프로필 이미지" />
+        {userInfo?.userImg === '1' && <img src={profile1} alt={userInfo?.nickName} />}
+        {userInfo?.userImg === '2' && <img src={profile2} alt={userInfo?.nickName} />}
+        {userInfo?.userImg === '3' && <img src={profile3} alt={userInfo?.nickName} />}
+        {userInfo?.userImg === '4' && <img src={profile4} alt={userInfo?.nickName} />}
+        {userInfo?.userImg === '5' && <img src={profile5} alt={userInfo?.nickName} />}
+        {userInfo?.userImg === '6' && <img src={profile6} alt={userInfo?.nickName} />}
       </div>
       <div className="name-wrapper">
         <h2>{userInfo?.nickName || '로딩 중...'}</h2>
