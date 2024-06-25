@@ -5,7 +5,9 @@ import {
   isDeclarationAtom,
   isActiveDeclarationBtnAtom,
 } from '../../store/declaration/Declarationstore';
+
 import pointAtom from '../../store/home/point/Pointsotre';
+import childrenLocationAtom from '../../store/children/ChildrenLocation';
 
 /* eslint-disable */
 declare global {
@@ -19,10 +21,12 @@ const MapBox = () => {
   const [, setIsDeclaration] = useAtom(isDeclarationAtom);
   const [isActiveDeclarationBtn] = useAtom(isActiveDeclarationBtnAtom);
   const [point] = useAtom(pointAtom);
+  const [childrenLocation] = useAtom(childrenLocationAtom);
 
   const mapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
   const myLocationMarkerRef = useRef<any>(null);
+  const ChildrenLocationMarkerRef = useRef<any>(null);
   const clickListenerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ const MapBox = () => {
       navigator.geolocation.getCurrentPosition(function (position) {
         var lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
-          console.log(lat);
+        console.log(lat);
         var locPosition = new window.kakao.maps.LatLng(lat, lon);
         map.setCenter(locPosition);
       });
@@ -56,6 +60,9 @@ const MapBox = () => {
 
     const myLocationMarker = new window.kakao.maps.Marker({});
     myLocationMarkerRef.current = myLocationMarker;
+
+    const childrenLocationMarker = new window.kakao.maps.Marker({});
+    ChildrenLocationMarkerRef.current = childrenLocationMarker;
   }, []);
 
   useEffect(() => {

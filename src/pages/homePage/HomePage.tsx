@@ -40,33 +40,34 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      const options = {
-        enableHighAccuracy: true,
-        timeout: 500,
-        maximumAge: 0,
-      };
+    let watchId: number | undefined;
 
-      navigator.geolocation.watchPosition(
+    const startWatching = () => {
+      watchId = navigator.geolocation.watchPosition(
         (position) => {
-          const lat = position.coords.latitude; // 위도
-          const lon = position.coords.longitude; // 경도
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
           setPoint({ latitude: lat, longitude: lon });
         },
         (error) => {
           console.error('Error getting geolocation:', error);
           setPoint({ latitude: 0, longitude: 0 });
-          window.location.reload();
         },
-        options,
+        {
+          enableHighAccuracy: true,
+          timeout: 500,
+          maximumAge: 0,
+        },
       );
+    };
 
-      // 컴포넌트 언마운트 시 위치 감시 정리 (예시로 주석 처리)
-      // return () => navigator.geolocation.clearWatch(watchId);
-    } else {
-      // HTML5의 GeoLocation을 사용할 수 없을 때 기본 위치로 설
-      setPoint({ latitude: 0, longitude: 0 });
-    }
+    startWatching();
+
+    return () => {
+      if (watchId) {
+        navigator.geolocation.clearWatch(watchId);
+      }
+    };
   }, []);
 
   useEffect(() => {

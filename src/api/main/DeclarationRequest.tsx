@@ -11,8 +11,13 @@ interface DeclarationDto {
 
 const declarationRequest = async (declarationDto: DeclarationDto): Promise<boolean> => {
   let result: boolean = false;
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
   await axios
-    .post(`${API_BASE_URL}api/declaration`, declarationDto)
+    .post(`${API_BASE_URL}api/declaration`, declarationDto, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    })
     .then((res) => {
       console.log(res);
       result = true;
