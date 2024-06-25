@@ -7,8 +7,13 @@ interface InputGuardianId {
 
 const changeGuardian = async (inputGuardianId: InputGuardianId): Promise<boolean> => {
   let result: boolean = false;
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
   await axios
-    .post(`${API_BASE_URL}api/student/designate/guardian`, inputGuardianId)
+    .post(`${API_BASE_URL}api/student/designate/guardian`, inputGuardianId, {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    })
     .then(() => {
       alert('보호자 아이디가 성공적으로 전송되었습니다.');
       result = true;
