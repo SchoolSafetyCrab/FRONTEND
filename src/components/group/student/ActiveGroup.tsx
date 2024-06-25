@@ -38,7 +38,7 @@ const ActiveGroup: React.FC = () => {
   const firstGroup = groupsInfo[0];
 
   const validNotifications = notifications.filter(
-    (notification) => new Date(notification.endDate) > new Date(),
+    (notification) => new Date(notification.endDate) >= new Date(),
   );
 
   return (
