@@ -36,6 +36,7 @@ const StudentFindGroup: React.FC<StudentFindGroupProps> = ({ query }) => {
             <GroupBox
               // eslint-disable-next-line react/no-array-index-key
               key={index}
+              groupId={group.groupId}
               schoolName={group.schoolName}
               schoolYear={group.schoolYear}
               schoolBan={group.schoolBan}

@@ -3,22 +3,25 @@ import React, { useState } from 'react';
 import School from '@assets/images/group/school.svg';
 import People from '@assets/images/group/people.svg';
 import '@styles/group/GroupBox.css';
+import joinGroup from '../../../api/group/joinGroup';
 
 interface GroupBoxProps {
+  groupId: number;
   schoolName: string;
   schoolYear: number;
   schoolBan: number;
   state: boolean;
 }
 
-const GroupBox: React.FC<GroupBoxProps> = ({ schoolName, schoolYear, schoolBan, state }) => {
+const GroupBox: React.FC<GroupBoxProps> = ({
+  groupId,
+  schoolName,
+  schoolYear,
+  schoolBan,
+  state,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputPassword, setInputPassword] = useState('');
-
-  // eslint-disable-next-line no-unused-vars
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState<boolean | null>(null);
-
-  const correctPassword = '1234'; // 실제 비밀번호로 교체
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -27,21 +30,26 @@ const GroupBox: React.FC<GroupBoxProps> = ({ schoolName, schoolYear, schoolBan, 
   const handleModalClose = () => {
     setIsModalOpen(false);
     setInputPassword('');
-    setIsPasswordCorrect(null);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputPassword(e.target.value);
   };
 
-  const handlePasswordSubmit = () => {
-    if (inputPassword === correctPassword) {
-      alert('가입이 완료되었습니다.');
-      handleModalClose();
-    } else {
-      alert('비밀번호가 틀렸습니다.');
-      setIsPasswordCorrect(false);
-      handleModalClose();
+  const handlePasswordSubmit = async () => {
+    try {
+      const response = await joinGroup({ groupId, groupCode: inputPassword });
+      console.log('here response:', response);
+      if (response === '') {
+        alert('가입이 실패했습니다.');
+        handleModalClose();
+      } else {
+        alert('가입이 완료되었습니다.');
+        handleModalClose();
+      }
+    } catch (error) {
+      console.error('Error joining group:', error);
+      alert('가입 과정에서 오류가 발생했습니다.');
     }
   };
 
