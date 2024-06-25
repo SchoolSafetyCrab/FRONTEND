@@ -31,9 +31,9 @@ export default function JoinProfile() {
     setProfileSelectVisible(true);
   };
 
-  const handleImageClickBlock = (selectedImage: string) => {
+  const handleImageClickBlock = (selectedImage: string, imgNum : string) => {
     setSelectedProfileImage(selectedImage);
-    setImg(selectedImage);
+    setImg(imgNum);
     setIsSelectImg(true);
     setProfileSelectVisible(false);
 
@@ -120,7 +120,7 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={() => handleImageClickBlock(profile1)}
+            onClick={() => handleImageClickBlock(profile1, '1')}
           >
             <img
               src={profile1}
@@ -134,7 +134,7 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={() => handleImageClickBlock(profile2)}
+            onClick={() => handleImageClickBlock(profile2, '2')}
           >
             <img
               src={profile2}
@@ -149,7 +149,7 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={() => handleImageClickBlock(profile3)}
+            onClick={() => handleImageClickBlock(profile3, '3')}
           >
             <img
               src={profile3}
@@ -162,7 +162,7 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={() => handleImageClickBlock(profile4)}
+            onClick={() => handleImageClickBlock(profile4, '4')}
           >
             <img
               src={profile4}
@@ -177,7 +177,7 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={() => handleImageClickBlock(profile5)}
+            onClick={() => handleImageClickBlock(profile5, '5')}
           >
             <img
               src={profile5}
@@ -190,7 +190,7 @@ export default function JoinProfile() {
             type="button"
             className="btn p-0 border-0"
             style={{ backgroundColor: '#ffffff', border: 'none' }}
-            onClick={() => handleImageClickBlock(profile6)}
+            onClick={() => handleImageClickBlock(profile6, '6')}
           >
             <img
               src={profile6}

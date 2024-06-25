@@ -56,7 +56,6 @@ export default function HomePage() {
         (error) => {
           console.error('Error getting geolocation:', error);
           setPoint({ latitude: 0, longitude: 0 });
-          window.location.reload();
         },
         options,
       );

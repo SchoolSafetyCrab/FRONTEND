@@ -5,23 +5,16 @@ import MyPage from '@pages/mypagePage/MyPage';
 import GroupPage from '@pages/groupPage/GroupPage';
 import WayPage from '@pages/wayPage/WayPage';
 import MainDeclarationBoard from '@components/main/MainDeclarationBoard';
-
+import GroupChildrenPage from '@pages/groupPage/GroupChildrenPage/GroupChildrenPage';
 import styles from '@styles/main/MainPage.module.css';
 import Header from '../components/common/Header';
 import TabBar from '../components/common/TabBar';
 import findUserInfo from '../api/user/UserFindInfo';
 import userInfoAtom from '../store/userInfo/UserFindInfo';
 
-const tabs = [
-  { id: 1, title: '회원정보', component: <HomePage /> },
-  { id: 2, title: '안전등하굣길', component: <WayPage /> },
-  { id: 3, title: '그룹조회', component: <GroupPage /> },
-  { id: 4, title: '마이페이지', component: <MyPage /> },
-];
-
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState(1);
-  const [, setUserInfo] = useAtom(userInfoAtom);
+  const [userInfo, setUserInfo] = useAtom(userInfoAtom);
 
   const handleTabClick = (id: number) => {
     setActiveTab(id);
@@ -40,11 +33,22 @@ export default function MainPage() {
     fetchUserInfo();
   }, []);
 
-  const ActiveComponent = tabs.find((tab) => tab.id === activeTab)?.component;
+  const tabs = [
+    { id: 1, title: '홈', component: <HomePage /> },
+    { id: 2, title: '안전등하굣길', component: <WayPage /> },
+    {
+      id: 3,
+      title: userInfo.role === 'ROLE_PARENTS' ? '내 자녀 조회' : '그룹조회',
+      component: userInfo.role === 'ROLE_PARENTS' ? <GroupChildrenPage /> : <GroupPage />,
+    },
+    { id: 4, title: '마이페이지', component: <MyPage /> },
+  ];
 
+  const ActiveComponent = tabs.find((tab) => tab.id === activeTab)?.component;
+  const ActiveTile = tabs.find((tab) => tab.id === activeTab)?.title.toString() || '홈';
   return (
     <div className={styles.mainContainer}>
-      <Header title="홈" />
+      <Header title={ActiveTile} />
       <div className={styles.content}>{ActiveComponent}</div>
       <TabBar activeTab={activeTab} onTabClick={handleTabClick} />
       <MainDeclarationBoard />

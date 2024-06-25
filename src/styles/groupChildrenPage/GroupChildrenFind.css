@@ -1,0 +1,21 @@
+.groupChildrenFindContainer{
+    width: 93%;
+    height: 100%;
+    display: flex;
+    gap: 3%;
+    overflow-x: hidden;
+}
+
+.childInfo{
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+}
+.childInfo >img {
+    height: 50%;
+    border-radius: 50%;
+}
