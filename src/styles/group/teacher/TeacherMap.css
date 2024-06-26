@@ -4,7 +4,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-
   overflow: hidden;
 }
 
@@ -31,6 +30,14 @@
   width: 100%;
   height: 90%;
 }
+.circle-btn-div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 80%;
+  left: 80%;
+  z-index: 4;
+}
 
 .circle-button {
   width: 3rem;
@@ -42,13 +49,23 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 3rem;
-  right: 1rem;
   cursor: pointer;
-  z-index: 2;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.circle-button:active {
+  transform: scale(0.9);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.circle-button:hover {
+  background-color: #e0a800;
 }
 
 .circle-button img {
   width: 1.5rem;
   height: 1.5rem;
+  z-index: 6;
 }

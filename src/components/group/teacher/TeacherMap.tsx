@@ -4,8 +4,13 @@ import plus from '@assets/images/group/plus.svg';
 import pencil from '@assets/images/group/pencil.svg';
 
 import '@styles/group/teacher/TeacherMap.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function TeacherMap() {
+  const navigate = useNavigate();
+  const writeBtnClick = () => {
+    navigate('/group/teacher-write');
+  };
   return (
     <div className="teacher-map-section">
       <div className="add-button">
@@ -14,10 +19,12 @@ export default function TeacherMap() {
           <img src={plus} alt="플러스" />
         </button>
       </div>
-      <section className="map-section">
-        <div className="circle-button">
+      <div className="circle-btn-div">
+        <button type="button" className="circle-button" onClick={writeBtnClick}>
           <img src={pencil} alt="플러스" />
-        </div>
+        </button>
+      </div>
+      <section className="map-section">
         <MapBox />
       </section>
     </div>

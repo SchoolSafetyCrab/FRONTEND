@@ -22,5 +22,5 @@ export default function TeacherGroupPage() {
     }
   };
 
-  return <div>{renderComponent()}</div>;
+  return <div style={{ width: '100%', height: '100%' }}>{renderComponent()}</div>;
 }
