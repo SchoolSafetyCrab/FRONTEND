@@ -1,6 +1,6 @@
 import React from 'react';
-import ActiveGroup from '@components/group/student/ActiveGroup';
-import DisActiveGroup from '@components/group/student/DisActiveGroup';
+import ActiveGroup from '@components/group/ActiveGroup';
+import DisActiveGroup from '@components/group/DisActiveGroup';
 import '@styles/group/StudentGroup.css';
 
 export default function TeacherGroup() {

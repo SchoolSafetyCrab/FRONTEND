@@ -76,7 +76,7 @@ const GroupBox: React.FC<GroupBoxProps> = ({
 
       {isModalOpen && (
         <div className="password-modal-container">
-          <div className="background-div" />
+          <div className="pwd-modal-background-div" />
           <div className="modal-contents">
             <h1 style={{ fontSize: '1rem' }}>비밀번호를 입력해주세요.</h1>
             <input

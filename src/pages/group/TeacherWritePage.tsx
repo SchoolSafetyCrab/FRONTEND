@@ -36,8 +36,8 @@ export default function TeacherNoticePage() {
       try {
         const res = await getGroupInfo();
         if (res) {
-          console.log(res);
-          setGroupInfo(res[0]?.groupId);
+          const num = res.length - 1;
+          setGroupInfo(res[num]?.groupId);
         } else {
           console.error('Response is null or undefined');
         }

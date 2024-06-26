@@ -1,41 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import { groupsAtom } from '@pages/group/StudentGroupPage';
 import School from '@assets/images/group/school.svg';
+import { recentGroup } from '../../store/group/Groupstore';
 import Message from './Message';
 import '@styles/group/ActiveGroup.css';
-import getGroupNotification from '../../../api/group/getGroupNotification';
-import { MessageInfo } from '../../../interfaces/MessageInfo';
+import getGroupNotification from '../../api/group/getGroupNotification';
+import { MessageInfo } from '../../interfaces/MessageInfo';
 
 const ActiveGroup: React.FC = () => {
-  const [groupsInfo] = useAtom(groupsAtom);
   const [notifications, setNotifications] = useState<MessageInfo[]>([]);
+  const [recentGroupInfo] = useAtom(recentGroup);
 
   useEffect(() => {
     const fetchNotiData = async () => {
-      try {
-        const response = await getGroupNotification(groupsInfo[0]?.groupId);
+      if (recentGroupInfo) {
+        try {
+          const response = await getGroupNotification(recentGroupInfo.groupId);
 
-        if (Array.isArray(response)) {
-          setNotifications(response);
-        } else {
-          console.error('Expected an array of notifications, but got:', response);
+          if (Array.isArray(response)) {
+            setNotifications(response);
+          } else {
+            console.error('Expected an array of notifications, but got:', response);
+          }
+        } catch (error) {
+          console.error('Error fetching group data:', error);
         }
-      } catch (error) {
-        console.error('Error fetching group data:', error);
       }
     };
+    fetchNotiData();
+  }, [recentGroupInfo]);
 
-    if (groupsInfo.length > 0) {
-      fetchNotiData();
-    }
-  }, [groupsInfo]);
-
-  if (groupsInfo.length === 0) {
+  if (!recentGroupInfo) {
     return null;
   }
-
-  const firstGroup = groupsInfo[0];
 
   const validNotifications = notifications.filter(
     (notification) => new Date(notification.endDate) >= new Date(),
@@ -46,9 +43,9 @@ const ActiveGroup: React.FC = () => {
       <div className="name-div">
         <div className="school-div">
           <img src={School} alt="학교 아이콘" />
-          <h3>{firstGroup.schoolName}</h3>
+          <h3>{recentGroupInfo.schoolName}</h3>
         </div>
-        <h1>{`${firstGroup.schoolYear}학년 ${firstGroup.schoolBan}반`}</h1>
+        <h1>{`${recentGroupInfo.schoolYear}학년 ${recentGroupInfo.schoolBan}반`}</h1>
       </div>
       <div className="message-div">
         {validNotifications.map((notification) => (
