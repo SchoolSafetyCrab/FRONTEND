@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { atom, useAtom } from 'jotai';
 
 import '@styles/header/TeacherHeader.css';
 
+export const activeButtonAtom = atom<string>('지도');
+
 const TeacherHeader: React.FC = () => {
-  const [activeButton, setActiveButton] = useState<string>('지도');
+  const [activeButton, setActiveButton] = useAtom(activeButtonAtom); // useAtom 사용
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
