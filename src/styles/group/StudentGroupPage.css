@@ -1,0 +1,15 @@
+.student-group-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.search-section {
+  flex: 0 0 auto;
+  margin-bottom: 0.5rem;
+}
+
+.component-section {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
