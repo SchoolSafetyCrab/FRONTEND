@@ -2,16 +2,19 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable operator-linebreak */
+import { useAtom } from 'jotai';
 import React, { useState, useEffect } from 'react';
 import checkcircle from '@assets/images/group/checkcircle.svg';
 import getGroupMember from '../../../api/group/getGroupMember';
 import { GroupMember } from '../../../interfaces/GroupMember';
+import { addStudentAtom } from './TeacherMap';
 
 import '@styles/group/teacher/AddStudent.css';
 
 export default function AddStudent() {
   const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
   const [groupList, setGroupList] = useState<GroupMember[] | null>(null);
+  const [, setAddStudent] = useAtom(addStudentAtom);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +54,9 @@ export default function AddStudent() {
     console.log('클릭');
   };
 
+  const handleClose = () => {
+    setAddStudent(false);
+  };
   return (
     <div className="student-add-container">
       <div className="background-div" />
@@ -60,22 +66,40 @@ export default function AddStudent() {
             <img src={checkcircle} alt="체크버튼" />
             <p>전체 선택</p>
           </button>
-          <button
-            type="button"
-            className="btn btn-outline-primary btn-sm"
-            id="button-addon2"
-            onClick={handleAddStudents}
-            style={{
-              margin: '0',
-              backgroundColor: '#35332E',
-              border: 'none',
-              color: '#ffffff',
-              borderRadius: '20px',
-              width: '80px',
-            }}
-          >
-            추가
-          </button>
+          <div>
+            <button
+              type="button"
+              className="btn btn-outline-primary btn-sm"
+              id="button-addon2"
+              onClick={handleClose}
+              style={{
+                margin: '0',
+                backgroundColor: '#dddddd',
+                border: 'none',
+                color: '#ffffff',
+                borderRadius: '20px',
+                width: '80px',
+              }}
+            >
+              취소
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-primary btn-sm"
+              id="button-addon2"
+              onClick={handleAddStudents}
+              style={{
+                margin: '0',
+                backgroundColor: '#35332E',
+                border: 'none',
+                color: '#ffffff',
+                borderRadius: '20px',
+                width: '80px',
+              }}
+            >
+              추가
+            </button>
+          </div>
         </div>
         <div className="student-div">
           <table>

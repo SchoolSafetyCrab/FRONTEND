@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { atom, useAtom } from 'jotai';
 import MapBox from '@components/common/MapBox';
 import plus from '@assets/images/group/plus.svg';
 import pencil from '@assets/images/group/pencil.svg';
-import AddStudent from '@components/group/teacher/AddStudent';
 import '@styles/group/teacher/TeacherMap.css';
 import { useNavigate } from 'react-router-dom';
 
+export const addStudentAtom = atom(false);
+
 export default function TeacherMap() {
-  const [addComponentState, setAddComponentState] = useState(false);
+  const [, setAddStudenttState] = useAtom(addStudentAtom);
   const navigate = useNavigate();
   const writeBtnClick = () => {
     navigate('/group/teacher-write');
   };
   const handleAddStudent = () => {
-    setAddComponentState(true);
+    setAddStudenttState(true);
   };
   return (
     <div className="teacher-map-section">
-      {addComponentState && <AddStudent />}
-
       <div className="add-button">
         <button type="button" onClick={handleAddStudent}>
           학생 추가하기

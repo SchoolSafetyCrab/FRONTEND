@@ -2,6 +2,8 @@ import { useAtom } from 'jotai';
 // import TeacherWritePage from './TeacherWritePage';
 import TeacherGroup from '@components/group/teacher/TeacherGroup';
 import { activeButtonAtom, activeMakeGroupAtom } from '@components/group/teacher/TeacherHeader';
+import { addStudentAtom } from '@components/group/teacher/TeacherMap';
+import AddStudent from '@components/group/teacher/AddStudent';
 
 // import MakeGroup from '../../components/group/teacher/MakeGroup';
 import TeacherMap from '../../components/group/teacher/TeacherMap';
@@ -12,6 +14,8 @@ export default function TeacherGroupPage() {
   const [activeButton] = useAtom(activeButtonAtom);
 
   const [makeGroupStatus] = useAtom(activeMakeGroupAtom);
+
+  const [addStudentStatus] = useAtom(addStudentAtom);
 
   const renderComponent = () => {
     switch (activeButton) {
@@ -28,6 +32,8 @@ export default function TeacherGroupPage() {
     <div style={{ width: '100%', height: '100%' }}>
       {renderComponent()}
       {makeGroupStatus && <MakeGroup />}
+
+      {addStudentStatus && <AddStudent />}
     </div>
   );
 }
