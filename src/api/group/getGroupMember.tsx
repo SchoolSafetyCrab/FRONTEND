@@ -2,10 +2,10 @@ import axios from 'axios';
 import API_BASE_URL from '../Apiconfig';
 import { GroupMemberResponse, GroupMember } from '../../interfaces/GroupMember';
 
-const getGroupMember = async (): Promise<GroupMember[] | null> => {
+const getGroupMember = async (number: number): Promise<GroupMember[] | null> => {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   try {
-    const response = await axios.get(`${API_BASE_URL}api/teacher/member/group/1`, {
+    const response = await axios.get(`${API_BASE_URL}api/teacher/member/group/${number}`, {
       headers: {
         Authorization: `${accessToken}`,
       },

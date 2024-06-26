@@ -12,9 +12,7 @@ import MakeGroup from '../../components/group/teacher/MakeGroup';
 
 export default function TeacherGroupPage() {
   const [activeButton] = useAtom(activeButtonAtom);
-
   const [makeGroupStatus] = useAtom(activeMakeGroupAtom);
-
   const [addStudentStatus] = useAtom(addStudentAtom);
 
   const renderComponent = () => {

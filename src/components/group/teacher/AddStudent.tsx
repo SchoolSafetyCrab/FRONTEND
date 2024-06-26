@@ -2,48 +2,44 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable operator-linebreak */
+/* eslint-disable no-unused-vars */
 import { useAtom } from 'jotai';
 import React, { useState, useEffect } from 'react';
 import checkcircle from '@assets/images/group/checkcircle.svg';
-import getGroupMember from '../../../api/group/getGroupMember';
-import { GroupMember } from '../../../interfaces/GroupMember';
+import profile1 from '@assets/images/profile/map/profile1.png';
+import profile2 from '@assets/images/profile/map/profile2.png';
+import profile3 from '@assets/images/profile/map/profile3.png';
+import profile4 from '@assets/images/profile/map/profile4.png';
+import profile5 from '@assets/images/profile/map/profile5.png';
+import profile6 from '@assets/images/profile/map/profile6.png';
+
+// import { GroupMember } from '../../../interfaces/GroupMember';
 import { addStudentAtom } from './TeacherMap';
+import { groupMembers, selectedMembers } from '../../../store/group/Groupstore';
 
 import '@styles/group/teacher/AddStudent.css';
 
 export default function AddStudent() {
-  const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
-  const [groupList, setGroupList] = useState<GroupMember[] | null>(null);
+  const [groupList] = useAtom(groupMembers);
+  const [tempSelectedStudents, setTempSelectedStudents] = useState<number[]>([]);
+  const [selectedStudents, setSelectedStudents] = useAtom(selectedMembers);
   const [, setAddStudent] = useAtom(addStudentAtom);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getGroupMember();
-        console.log(response);
-        if (response === null) {
-          console.log('멤버가 없습니다');
-        } else setGroupList(response);
-        // 여기서 response를 처리하거나 상태 업데이트를 수행할 수 있습니다.
-      } catch (error) {
-        console.error('Error fetching group members:', error);
-      }
-    };
-
-    fetchData(); // async 함수를 직접 호출합니다.
-  }, []);
+    console.log('추가된 멤버들:', selectedStudents);
+  }, [selectedStudents]); // selectedStudents 상태가 변경될 때마다 useEffect 실행
 
   const allStudentClick = () => {
-    setSelectedStudents((prevState) => {
-      if (prevState.length === 4) {
+    setTempSelectedStudents((prevState) => {
+      if (prevState.length === groupList.length) {
         return [];
       }
-      return [0, 1, 2, 3];
+      return groupList.map((member) => member.userId);
     });
   };
 
   const handleStudentClick = (index: number) => {
-    setSelectedStudents((prevState) =>
+    setTempSelectedStudents((prevState) =>
       prevState.includes(index)
         ? prevState.filter((studentIndex) => studentIndex !== index)
         : [...prevState, index],
@@ -51,12 +47,15 @@ export default function AddStudent() {
   };
 
   const handleAddStudents = () => {
-    console.log('클릭');
+    const selected = groupList.filter((member) => tempSelectedStudents.includes(member.userId));
+    setSelectedStudents(selected);
+    setAddStudent(false);
   };
 
   const handleClose = () => {
     setAddStudent(false);
   };
+
   return (
     <div className="student-add-container">
       <div className="background-div" />
@@ -109,12 +108,20 @@ export default function AddStudent() {
                   groupList.map((member) => (
                     <td key={member.userId}>
                       <button
-                        className={`student-btn ${selectedStudents.includes(member.userId) ? 'selected' : ''}`}
+                        className={`student-btn ${
+                          tempSelectedStudents.includes(member.userId) ? 'selected' : ''
+                        }`}
                         type="button"
                         onClick={() => handleStudentClick(member.userId)}
                       >
-                        <img src={member.iconImg} alt="이미지" />
-                        <h1 style={{ fontSize: '1rem' }}>{member.nickname}</h1>
+                        {member.iconImg === '1' && <img src={profile1} alt="이미지" />}
+                        {member.iconImg === '2' && <img src={profile2} alt="이미지" />}
+                        {member.iconImg === '3' && <img src={profile3} alt="이미지" />}
+                        {member.iconImg === '4' && <img src={profile4} alt="이미지" />}
+                        {member.iconImg === '5' && <img src={profile5} alt="이미지" />}
+                        {member.iconImg === '6' && <img src={profile6} alt="이미지" />}
+
+                        <h1 style={{ fontSize: '0.6rem', color: 'black' }}>{member.nickname}</h1>
                       </button>
                     </td>
                   ))}

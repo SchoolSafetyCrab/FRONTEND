@@ -86,9 +86,12 @@ td {
   text-align: center;
   padding: 1rem;
 }
-
+.student-div {
+  z-index: 10;
+}
 .student-btn {
   width: 100%;
+  height: 110%;
   border: 0;
   background-color: transparent;
 }
@@ -96,8 +99,6 @@ td {
 .student-btn > img {
   width: 100%;
   border: 0;
-  border-radius: 50%;
-  margin-bottom: 4px;
 }
 
 .student-btn.selected {

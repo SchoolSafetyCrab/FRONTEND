@@ -10,18 +10,17 @@
   width: 80%;
   display: flex;
   flex-direction: row;
+  overflow-x: auto;
 }
-.student-btn {
-  width: 100%;
+
+.click-student-btn {
+  width: 30%;
   border: 0;
   background-color: transparent;
 }
 
-.student-btn > img {
-  width: 3rem;
+.click-student-btn > img {
   border: 0;
-  border-radius: 50%;
-  margin-bottom: 4px;
 }
 
 .add-btn-container {
@@ -37,4 +36,5 @@
   background-color: transparent;
   margin-right: 1rem;
   margin-left: auto;
+  color: black;
 }
