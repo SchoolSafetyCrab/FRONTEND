@@ -1,10 +1,34 @@
-import React, { useState } from 'react';
-import profile1 from '@assets/images/profile/profile1.svg';
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable operator-linebreak */
+import React, { useState, useEffect } from 'react';
 import checkcircle from '@assets/images/group/checkcircle.svg';
+import getGroupMember from '../../../api/group/getGroupMember';
+import { GroupMember } from '../../../interfaces/GroupMember';
+
 import '@styles/group/teacher/AddStudent.css';
 
 export default function AddStudent() {
-  const [selectedStudents, setSelectedStudents] = useState<Array<number>>([]);
+  const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
+  const [groupList, setGroupList] = useState<GroupMember[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getGroupMember();
+        console.log(response);
+        if (response === null) {
+          console.log('멤버가 없습니다');
+        } else setGroupList(response);
+        // 여기서 response를 처리하거나 상태 업데이트를 수행할 수 있습니다.
+      } catch (error) {
+        console.error('Error fetching group members:', error);
+      }
+    };
+
+    fetchData(); // async 함수를 직접 호출합니다.
+  }, []);
 
   const allStudentClick = () => {
     setSelectedStudents((prevState) => {
@@ -15,7 +39,6 @@ export default function AddStudent() {
     });
   };
 
-  /* eslint-disable */
   const handleStudentClick = (index: number) => {
     setSelectedStudents((prevState) =>
       prevState.includes(index)
@@ -58,18 +81,19 @@ export default function AddStudent() {
           <table>
             <tbody>
               <tr>
-                {[0, 1, 2, 3].map((index) => (
-                  <td key={index}>
-                    <button
-                      className={`student-btn ${selectedStudents.includes(index) ? 'selected' : ''}`}
-                      type="button"
-                      onClick={() => handleStudentClick(index)}
-                    >
-                      <img src={profile1} alt="이미지" />
-                      <h1 style={{ fontSize: '1rem' }}>김민규</h1>
-                    </button>
-                  </td>
-                ))}
+                {groupList &&
+                  groupList.map((member) => (
+                    <td key={member.userId}>
+                      <button
+                        className={`student-btn ${selectedStudents.includes(member.userId) ? 'selected' : ''}`}
+                        type="button"
+                        onClick={() => handleStudentClick(member.userId)}
+                      >
+                        <img src={member.iconImg} alt="이미지" />
+                        <h1 style={{ fontSize: '1rem' }}>{member.nickname}</h1>
+                      </button>
+                    </td>
+                  ))}
               </tr>
             </tbody>
           </table>
