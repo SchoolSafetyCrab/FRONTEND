@@ -1,15 +1,17 @@
 import { useAtom } from 'jotai';
 // import TeacherWritePage from './TeacherWritePage';
 import TeacherGroup from '@components/group/teacher/TeacherGroup';
-import { activeButtonAtom } from '@components/group/teacher/TeacherHeader';
+import { activeButtonAtom, activeMakeGroupAtom } from '@components/group/teacher/TeacherHeader';
 
 // import MakeGroup from '../../components/group/teacher/MakeGroup';
 import TeacherMap from '../../components/group/teacher/TeacherMap';
-// import AddStudent from '../../components/group/teacher/AddStudent';
+import MakeGroup from '../../components/group/teacher/MakeGroup';
 // import ClickStudentTab from '../../components/group/teacher/ClickStudentTab';
 
 export default function TeacherGroupPage() {
   const [activeButton] = useAtom(activeButtonAtom);
+
+  const [makeGroupStatus] = useAtom(activeMakeGroupAtom);
 
   const renderComponent = () => {
     switch (activeButton) {
@@ -22,5 +24,10 @@ export default function TeacherGroupPage() {
     }
   };
 
-  return <div style={{ width: '100%', height: '100%' }}>{renderComponent()}</div>;
+  return (
+    <div style={{ width: '100%', height: '100%' }}>
+      {renderComponent()}
+      {makeGroupStatus && <MakeGroup />}
+    </div>
+  );
 }
