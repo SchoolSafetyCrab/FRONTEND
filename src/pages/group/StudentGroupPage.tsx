@@ -1,22 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { atom, useAtom } from 'jotai';
 import SearchBar from '@components/group/student/SearchBar';
 import StudentGroup from '@components/group/student/StudentGroup';
 import StudentNoGroup from '@components/group/student/StudentNoGroup';
 import StudentFindGroup from '@components/group/student/StudentFindGroup';
 import '@styles/group/StudentGroupPage.css';
+import getGroupInfo from '../../api/group/getGroupInfo';
 
 type GroupStatus = 'inGroup' | 'noGroup' | 'searching' | null;
+
+export const groupsAtom = atom<any[]>([]);
 
 const StudentGroupPage: React.FC = () => {
   const [groupStatus, setGroupStatus] = useState<GroupStatus>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [groupsInfo, setGroupsInfo] = useAtom(groupsAtom);
+
+  const fetchGroupInfo = useCallback(async () => {
+    const data = await getGroupInfo();
+    if (data !== null) {
+      setGroupsInfo(data);
+    } else {
+      setGroupsInfo([]);
+    }
+    console.log(groupsInfo);
+  }, [setGroupsInfo]);
 
   useEffect(() => {
-    // 학생 그룹 정보 조회하는 api 호출
-    setGroupStatus('inGroup');
-    // setGroupStatus('noGroup');
-    // setGroupStatus('searching');
-  }, []);
+    fetchGroupInfo();
+  }, [fetchGroupInfo]);
+
+  useEffect(() => {
+    if (groupsInfo.length > 0) {
+      setGroupStatus('inGroup');
+    } else {
+      setGroupStatus('noGroup');
+    }
+  }, [groupsInfo]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);

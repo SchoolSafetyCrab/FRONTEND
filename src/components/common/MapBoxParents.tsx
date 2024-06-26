@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useAtom } from 'jotai';
-import profile1 from '@assets/images/profile/profile1.svg';
-import profile2 from '@assets/images/profile/profile2.svg';
-import profile3 from '@assets/images/profile/profile3.svg';
-import profile4 from '@assets/images/profile/profile4.svg';
-import profile5 from '@assets/images/profile/profile5.svg';
-import profile6 from '@assets/images/profile/profile6.svg';
+import profile1 from '@assets/images/profile/map/profile1.png';
+import profile2 from '@assets/images/profile/map/profile2.png';
+import profile3 from '@assets/images/profile/map/profile3.png';
+import profile4 from '@assets/images/profile/map/profile4.png';
+import profile5 from '@assets/images/profile/map/profile5.png';
+import profile6 from '@assets/images/profile/map/profile6.png';
 import childrenLocationAtom from '../../store/children/ChildrenLocation';
+import childrenSchoolWayAtom from '../../store/children/ChildrenSchoolWay';
 
 /* eslint-disable */
 declare global {
@@ -17,9 +18,20 @@ declare global {
 
 const MapBoxParent = () => {
   const [childrenLocation] = useAtom(childrenLocationAtom);
+  const [childrenSchoolWay] = useAtom(childrenSchoolWayAtom);
 
   const mapRef = useRef<any>(null);
   const ChildrenLocationMarkerRef = useRef<any>(null);
+  const polylineRef = useRef<any>(null);
+
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
 
   useEffect(() => {
     const container = document.getElementById('map');
@@ -32,8 +44,13 @@ const MapBoxParent = () => {
 
     const childrenLocationMarker = new window.kakao.maps.Marker({});
     ChildrenLocationMarkerRef.current = childrenLocationMarker;
+    const polyline = new window.kakao.maps.Polyline({
+      strokeWeight: 5,
+      strokeOpacity: 0.7,
+      strokeStyle: 'solid',
+    });
+    polylineRef.current = polyline;
   }, []);
-
 
   useEffect(() => {
     const map = mapRef.current;
@@ -52,8 +69,7 @@ const MapBoxParent = () => {
       6: profile6,
     };
     let numLat = parseInt(lat, 10);
-    let numLon = parseInt(lon,10);
-  
+    let numLon = parseInt(lon, 10);
 
     if (numLat !== 0 && numLon !== 0) {
       var locPosition = new window.kakao.maps.LatLng(lat, lon);
@@ -72,6 +88,18 @@ const MapBoxParent = () => {
       marker.setMap(null);
     }
   }, [childrenLocation]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const polyline = polylineRef.current;
+    const linePath = childrenSchoolWay.map(
+      (location) => new window.kakao.maps.LatLng(location.latitude, location.longitude),
+    );
+    polyline.setPath(linePath);
+    polyline.setMap(map);
+    const newColor = getRandomColor();
+    polyline.setOptions({ strokeColor: newColor });
+  }, [childrenSchoolWay]);
 
   return <div id="map" style={{ width: '100%', height: '100%', borderRadius: '3% 3%  0 0' }} />;
 };

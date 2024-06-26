@@ -3,7 +3,7 @@ import axios from 'axios';
 import API_BASE_URL from '../Apiconfig';
 
 interface Children {
-  userId: string;
+  userId: number;
   id: string;
   nickName: string;
   userImg: string;
