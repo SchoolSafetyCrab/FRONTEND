@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useAtom } from 'jotai';
-import profile1 from '@assets/images/profile/profile1.svg';
-import profile2 from '@assets/images/profile/profile2.svg';
-import profile3 from '@assets/images/profile/profile3.svg';
-import profile4 from '@assets/images/profile/profile4.svg';
-import profile5 from '@assets/images/profile/profile5.svg';
-import profile6 from '@assets/images/profile/profile6.svg';
+import profile1 from '@assets/images/profile/map/profile1.png';
+import profile2 from '@assets/images/profile/map/profile2.png';
+import profile3 from '@assets/images/profile/map/profile3.png';
+import profile4 from '@assets/images/profile/map/profile4.png';
+import profile5 from '@assets/images/profile/map/profile5.png';
+import profile6 from '@assets/images/profile/map/profile6.png';
 import childrenLocationAtom from '../../store/children/ChildrenLocation';
 import childrenSchoolWayAtom from '../../store/children/ChildrenSchoolWay';
 
