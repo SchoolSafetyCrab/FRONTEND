@@ -8,12 +8,14 @@ import profile4 from '@assets/images/profile/profile4.svg';
 import profile5 from '@assets/images/profile/profile5.svg';
 import profile6 from '@assets/images/profile/profile6.svg';
 import findChildren from '../../../api/findChildren/FindChildren';
+import childrenSchoolWay from '../../../api/childrenSchoolWay/ChildrenSchoolWay';
 import '@styles/groupChildrenPage/GroupChildrenFind.css';
 import db from '../../../firebase';
 import childrenLocationAtom from '../../../store/children/ChildrenLocation';
+import childrenSchoolWayAtom from '../../../store/children/ChildrenSchoolWay';
 
 interface Children {
-  userId: string;
+  userId: number;
   id: string;
   nickName: string;
   userImg: string;
@@ -25,11 +27,17 @@ interface LatLong {
   img: string;
 }
 
+interface ChildrenSchoolWay {
+  latitude: string;
+  longitude: string;
+}
+
 export default function GroupChildrenFind() {
   const [childrenData, setChildrenData] = useState<Children[]>([]);
   const [, setChildrenLocation] = useAtom(childrenLocationAtom);
   const [clickedChild, setClickedChild] = useState<{ id: string; img: string } | null>(null);
   const [unsubscribeSnapshot, setUnsubscribeSnapshot] = useState<(() => void) | null>(null);
+  const [, setChildrenSchoolWay] = useAtom(childrenSchoolWayAtom);
 
   useEffect(() => {
     const fetchChildrenData = async () => {
@@ -45,8 +53,19 @@ export default function GroupChildrenFind() {
     fetchChildrenData();
   }, []);
 
-  const findChildLocation = (id: string, img: string) => {
+  const findChildLocation = async (userId: number, id: string, img: string) => {
     setClickedChild({ id, img });
+    try {
+      const schoolway: ChildrenSchoolWay[] | null = await childrenSchoolWay(userId);
+      if (schoolway) {
+        setChildrenSchoolWay(schoolway);
+      } else {
+        setChildrenSchoolWay([]); // 또는 적절하게 null 케이스를 처리
+      }
+    } catch (error) {
+      console.error('Error fetching children info:', error);
+      setChildrenSchoolWay([]);
+    }
   };
 
   useEffect(() => {
@@ -91,7 +110,7 @@ export default function GroupChildrenFind() {
         <button
           type="button"
           key={child.userId}
-          onClick={() => findChildLocation(child.id, child.userImg)}
+          onClick={() => findChildLocation(child.userId, child.id, child.userImg)}
           className={`childInfo ${clickedChild && clickedChild.id === child.id ? 'clicked' : ''}`}
         >
           {child.userImg === '1' && (
