@@ -7,6 +7,7 @@ import WayPage from '@pages/wayPage/WayPage';
 import MainDeclarationBoard from '@components/main/MainDeclarationBoard';
 import GroupChildrenPage from '@pages/groupPage/GroupChildrenPage/GroupChildrenPage';
 import styles from '@styles/main/MainPage.module.css';
+import TeacherHeader from '@components/group/teacher/TeacherHeader';
 import Header from '../components/common/Header';
 import TabBar from '../components/common/TabBar';
 import findUserInfo from '../api/user/UserFindInfo';
@@ -16,9 +17,17 @@ export default function MainPage() {
   const [activeTab, setActiveTab] = useState(1);
   const [userInfo, setUserInfo] = useAtom(userInfoAtom);
 
+  // eslint-disable-next-line no-unused-vars
+  const [teacherTabAtom, setTeacherTabAtom] = useState(1);
+
+  useEffect(() => {
+    setTeacherTabAtom(1);
+  }, []);
+
   const handleTabClick = (id: number) => {
     setActiveTab(id);
   };
+
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -45,10 +54,15 @@ export default function MainPage() {
   ];
 
   const ActiveComponent = tabs.find((tab) => tab.id === activeTab)?.component;
-  const ActiveTile = tabs.find((tab) => tab.id === activeTab)?.title.toString() || '홈';
+  const ActiveTitle = tabs.find((tab) => tab.id === activeTab)?.title.toString() || '홈';
+
   return (
     <div className={styles.mainContainer}>
-      <Header title={ActiveTile} />
+      {userInfo.role === 'ROLE_TEACHER' && activeTab === 3 ? (
+        <TeacherHeader />
+      ) : (
+        <Header title={ActiveTitle} />
+      )}
       <div className={styles.content}>{ActiveComponent}</div>
       <TabBar activeTab={activeTab} onTabClick={handleTabClick} />
       <MainDeclarationBoard />
