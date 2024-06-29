@@ -1,42 +1,30 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { atom, useAtom } from 'jotai';
+import React, { useState, useEffect } from 'react';
+import { useAtom } from 'jotai';
 import SearchBar from '@components/group/student/SearchBar';
 import StudentGroup from '@components/group/student/StudentGroup';
 import StudentNoGroup from '@components/group/student/StudentNoGroup';
 import StudentFindGroup from '@components/group/student/StudentFindGroup';
 import '@styles/group/StudentGroupPage.css';
 import getGroupInfo from '../../api/group/getGroupInfo';
+import findGroupAtom from '../../store/group/findGroupStore';
 
 type GroupStatus = 'inGroup' | 'noGroup' | 'searching' | null;
-
-export const groupsAtom = atom<any[]>([]);
 
 const StudentGroupPage: React.FC = () => {
   const [groupStatus, setGroupStatus] = useState<GroupStatus>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [groupsInfo, setGroupsInfo] = useAtom(groupsAtom);
+  const [groupsInfo, setGroupsInfo] = useAtom(findGroupAtom);
 
-  const fetchGroupInfo = useCallback(async () => {
+  const fetchGroupInfo = async () => {
     const data = await getGroupInfo();
-    if (data !== null) {
+    if (data) {
       setGroupsInfo(data);
-    } else {
-      setGroupsInfo([]);
     }
-    console.log(groupsInfo);
-  }, [setGroupsInfo]);
+  };
 
   useEffect(() => {
     fetchGroupInfo();
-  }, [fetchGroupInfo]);
-
-  useEffect(() => {
-    if (groupsInfo.length > 0) {
-      setGroupStatus('inGroup');
-    } else {
-      setGroupStatus('noGroup');
-    }
-  }, [groupsInfo]);
+  }, []);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -49,8 +37,8 @@ const StudentGroupPage: React.FC = () => {
         <SearchBar onSearch={handleSearch} />
       </section>
       <section className="component-section">
-        {groupStatus === 'inGroup' && <StudentGroup />}
-        {groupStatus === 'noGroup' && <StudentNoGroup />}
+        {groupsInfo.length !== 0 && <StudentGroup />}
+        {groupsInfo.length === 0 && <StudentNoGroup />}
         {groupStatus === 'searching' && <StudentFindGroup query={searchQuery} />}
       </section>
     </div>
