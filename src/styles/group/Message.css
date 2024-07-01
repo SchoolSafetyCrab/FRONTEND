@@ -1,6 +1,6 @@
 .message-container {
   width: 100%;
-  height: 47%;
+  height: auto;
   border: 0;
   border-radius: 20px;
   background-color: #ffffff;
@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 30%;
+  height: 100%;
   align-items: center;
   justify-content: center;
 }
@@ -42,9 +42,11 @@
 }
 
 .content-div > h1 {
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: 600;
+  text-align: left;
 }
 .content-div > p {
-  font-size: 0.6rem;
+  font-size: 1rem;
+  text-align: left;
 }

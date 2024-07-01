@@ -1,0 +1,107 @@
+.student-add-container {
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  z-index: 4;
+}
+
+.background-div {
+  height: 100%;
+  position: relative;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.add-contents {
+  position: absolute;
+  height: 80%;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 10px 10px 0 0;
+  z-index: 5;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons > button > p {
+  color: #000000;
+}
+
+.buttons > div {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.check-button {
+  border: 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-button > img {
+  margin-bottom: 1rem;
+  margin-right: 0.5rem;
+}
+
+.student-div {
+  width: 100%;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+tr {
+  width: 100%;
+  height: 100px;
+
+  display: flex;
+  flex-direction: row;
+}
+
+td {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
+.student-div {
+  z-index: 10;
+}
+.student-btn {
+  width: 100%;
+  height: 110%;
+  border: 0;
+  background-color: transparent;
+}
+
+.student-btn > img {
+  width: 100%;
+  border: 0;
+}
+
+.student-btn.selected {
+  border: 2px solid #ffb800; /* 선택된 버튼에 대한 스타일 */
+  border-radius: 10px;
+}

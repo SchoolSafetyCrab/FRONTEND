@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAtom } from 'jotai';
-import ActiveGroup from '@components/group/ActiveGroup'; // 또는 '@components/group/student/ActiveGroup'
-import DisActiveGroup from '@components/group/DisActiveGroup'; // 또는 '@components/group/student/DisActiveGroup'
+import ActiveGroup from '@components/group/ActiveGroup';
+import DisActiveGroup from '@components/group/DisActiveGroup';
 import '@styles/group/StudentGroup.css';
 import findGroupAtom from '../../../store/group/findGroupStore';
 
-export default function StudentGroup() {
+export default function TeacherGroup() {
   const [groupsInfo] = useAtom(findGroupAtom);
 
   console.log(groupsInfo.length);
