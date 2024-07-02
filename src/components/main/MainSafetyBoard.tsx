@@ -12,7 +12,12 @@ import trafficilight from '@assets/images/home/trafficlight.svg';
 import construction from '@assets/images/home/construction.svg';
 import accident from '@assets/images/home/accident.svg';
 
-import { AlarmAtom, SafezoneAtom, AccidentSiteAtom } from '../../store/home/Togglestore';
+import {
+  AlarmAtom,
+  SafezoneAtom,
+  AccidentSiteAtom,
+  TrafficLightAtom,
+} from '../../store/home/Togglestore';
 
 export default function MainSafetyBoard() {
   const [isSafetyVisible, setIsSafetyVisible] = useState(false);
@@ -20,6 +25,7 @@ export default function MainSafetyBoard() {
   const [isAlarmSelected, setIsAlarmSelected] = useAtom(AlarmAtom);
   const [isSafezoneSelected, setIsSafezoneSelected] = useAtom(SafezoneAtom);
   const [isAccidentSiteSelected, setIsAccidentSiteSelected] = useAtom(AccidentSiteAtom);
+  const [isTrafficLightSelected, setIsTrafficLightSelected] = useAtom(TrafficLightAtom);
 
   const handleVilbleSafety = () => {
     setIsSafetyVisible(!isSafetyVisible);
@@ -40,6 +46,11 @@ export default function MainSafetyBoard() {
   const handleAccidentSite = async () => {
     setIsAccidentSiteSelected(!isAccidentSiteSelected);
     console.log(isAccidentSiteSelected);
+  };
+
+  const handleTrafficLight = async () => {
+    setIsTrafficLightSelected(!isTrafficLightSelected);
+    console.log(isTrafficLightSelected);
   };
 
   return (
@@ -79,7 +90,7 @@ export default function MainSafetyBoard() {
           {isSafetySelectBtn ? (
             <>
               <div className="select">
-                <button type="button">
+                <button type="button" onClick={handleTrafficLight}>
                   <img src={trafficilight} alt="신호등" />
                   <p>신호등</p>
                 </button>
