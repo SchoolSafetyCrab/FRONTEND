@@ -12,12 +12,14 @@ import trafficilight from '@assets/images/home/trafficlight.svg';
 import construction from '@assets/images/home/construction.svg';
 import accident from '@assets/images/home/accident.svg';
 
-import { AlarmAtom } from '../../store/home/Togglestore';
+import { AlarmAtom, SafezoneAtom, AccidentSiteAtom } from '../../store/home/Togglestore';
 
 export default function MainSafetyBoard() {
   const [isSafetyVisible, setIsSafetyVisible] = useState(false);
   const [isSafetySelectBtn, setIsSafetySelectBtn] = useState(true);
   const [isAlarmSelected, setIsAlarmSelected] = useAtom(AlarmAtom);
+  const [isSafezoneSelected, setIsSafezoneSelected] = useAtom(SafezoneAtom);
+  const [isAccidentSiteSelected, setIsAccidentSiteSelected] = useAtom(AccidentSiteAtom);
 
   const handleVilbleSafety = () => {
     setIsSafetyVisible(!isSafetyVisible);
@@ -28,10 +30,16 @@ export default function MainSafetyBoard() {
   };
 
   const handleAlarm = async () => {
-    if (isAlarmSelected) console.log('알람 off');
-    else console.log('알람 on');
-
     setIsAlarmSelected(!isAlarmSelected);
+  };
+
+  const handleSafezone = async () => {
+    setIsSafezoneSelected(!isSafezoneSelected);
+  };
+
+  const handleAccidentSite = async () => {
+    setIsAccidentSiteSelected(!isAccidentSiteSelected);
+    console.log(isAccidentSiteSelected);
   };
 
   return (
@@ -89,7 +97,7 @@ export default function MainSafetyBoard() {
                 </button>
               </div>
               <div className="select">
-                <button type="button">
+                <button type="button" onClick={handleSafezone}>
                   <img src={safezone} alt="보호구역" />
                   <p>어린이보호구역</p>
                 </button>
@@ -103,7 +111,7 @@ export default function MainSafetyBoard() {
             <>
               {' '}
               <div className="select select2">
-                <button type="button">
+                <button type="button" onClick={handleAccidentSite}>
                   <img src={accident} alt="교통사고 우발지" />
                   <p>교통사고 우발지</p>
                 </button>

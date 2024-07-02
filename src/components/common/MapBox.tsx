@@ -9,8 +9,12 @@ import {
 import pointAtom from '../../store/home/point/Pointsotre';
 import childrenLocationAtom from '../../store/children/ChildrenLocation';
 import getAlarms from '../../api/main/getEmergencyAlarmInfo';
-import { AlarmAtom } from '../../store/home/Togglestore';
+import getSafezones from '../../api/main/getSafezone';
+import getAccidentSites from '../../api/main/getAccidentSite';
+import { AlarmAtom, SafezoneAtom, AccidentSiteAtom } from '../../store/home/Togglestore';
 import alarmImg from '../../assets/images/home/bell.svg';
+import safezoneImg from '../../assets/images/home/safezone.svg';
+import accidentSiteImg from '../../assets/images/home/accident.svg';
 
 /* eslint-disable */
 declare global {
@@ -34,8 +38,12 @@ const MapBox = () => {
 
   // 토글
   const [isAlarmSelected] = useAtom(AlarmAtom);
+  const [isSafezoneSelected] = useAtom(SafezoneAtom);
+  const [isAccidentSiteSelected] = useAtom(AccidentSiteAtom);
   // 알람 마커들을 저장할 배열
   const alarmMarkersRef = useRef<any[]>([]);
+  const safezoneMarkerRef = useRef<any[]>([]);
+  const accidentSiteMarkerRef = useRef<any[]>([]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -108,6 +116,146 @@ const MapBox = () => {
     };
     alarmApi();
   }, [isAlarmSelected]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const marker = markerRef.current;
+
+    const safezoneApi = async () => {
+      if (isSafezoneSelected) {
+        // 기존 마커 제거
+        safezoneMarkerRef.current.forEach((safezoneMarker) => {
+          safezoneMarker.setMap(null);
+        });
+        safezoneMarkerRef.current = [];
+
+        var userLat = point.latitude;
+        var userLon = point.longitude;
+
+        const resp = await getSafezones({ lat: userLat, lng: userLon });
+        const data = resp.data;
+        console.log('safezone :', resp);
+        if (data.length > 0) {
+          // 마커 이미지의 이미지 크기 입니다
+          var imageSize = new window.kakao.maps.Size(40, 45);
+
+          // 마커 이미지를 생성합니다
+          var markerImage = new window.kakao.maps.MarkerImage(safezoneImg, imageSize);
+          data.forEach((safezone: any) => {
+            const marker = new window.kakao.maps.Marker({
+              position: new window.kakao.maps.LatLng(safezone.latitude, safezone.longitude),
+              map: map,
+              image: markerImage,
+            });
+
+            // 인포윈도우에 표시할 내용
+            const iwContent = `
+            <div style="padding: 10px; width: 300px;">
+              <div style="font-weight: bold;">어린이 보호구역</div>
+              <div>이름: ${safezone.name}</div>
+              <div>주소: ${safezone.address}</div>
+              <div>CCTV 개수: ${safezone.cctvNum}</div>
+            </div>
+            `;
+
+            var infowindow = new window.kakao.maps.InfoWindow({
+              content: iwContent,
+            });
+
+            (function (marker, infowindow) {
+              // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
+              window.kakao.maps.event.addListener(marker, 'mouseover', function () {
+                infowindow.open(map, marker);
+              });
+
+              // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+              window.kakao.maps.event.addListener(marker, 'mouseout', function () {
+                infowindow.close();
+              });
+            })(marker, infowindow);
+
+            // alarmMarkers 배열에 마커 추가
+            safezoneMarkerRef.current.push(marker);
+          });
+
+          for (var i = 0; i < safezoneMarkerRef.current.length; i++) {
+            safezoneMarkerRef.current[i].setMap(map);
+          }
+        }
+      }
+    };
+    safezoneApi();
+  }, [isSafezoneSelected]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const marker = markerRef.current;
+
+    const accidentSiteApi = async () => {
+      if (isAccidentSiteSelected) {
+        // 기존 마커 제거
+        accidentSiteMarkerRef.current.forEach((marker) => {
+          marker.setMap(null);
+        });
+        accidentSiteMarkerRef.current = [];
+
+        var userLat = point.latitude;
+        var userLon = point.longitude;
+
+        const resp = await getAccidentSites({ lat: userLat, lng: userLon });
+        const data = resp.data;
+        console.log('accidentSite 결과 :', resp);
+        if (data.length > 0) {
+          // 마커 이미지의 이미지 크기 입니다
+          var imageSize = new window.kakao.maps.Size(40, 45);
+
+          // 마커 이미지를 생성합니다
+          var markerImage = new window.kakao.maps.MarkerImage(accidentSiteImg, imageSize);
+          data.forEach((accidentSite: any) => {
+            const accidentSiteMarker = new window.kakao.maps.Marker({
+              position: new window.kakao.maps.LatLng(accidentSite.latitude, accidentSite.longitude),
+              map: map,
+              image: markerImage,
+            });
+
+            // 인포윈도우에 표시할 내용
+            const iwContent = `
+            <div style="padding: 10px; width: 300px;">
+              <div style="font-weight: bold;">사고우발지역</div>
+              <div>연도: ${accidentSite.year}</div>
+              <div>사고분류: ${accidentSite.type}</div>
+              <div>횟수: ${accidentSite.count}</div>
+            </div>
+            `;
+
+            var infowindow = new window.kakao.maps.InfoWindow({
+              content: iwContent,
+            });
+
+            (function (marker, infowindow) {
+              // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
+              window.kakao.maps.event.addListener(marker, 'mouseover', function () {
+                infowindow.open(map, marker);
+              });
+
+              // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+              window.kakao.maps.event.addListener(marker, 'mouseout', function () {
+                infowindow.close();
+              });
+            })(accidentSiteMarker, infowindow);
+
+            // alarmMarkers 배열에 마커 추가
+            accidentSiteMarkerRef.current.push(accidentSiteMarker);
+          });
+
+          for (var i = 0; i < accidentSiteMarkerRef.current.length; i++) {
+            accidentSiteMarkerRef.current[i].setMap(map);
+          }
+        }
+      }
+    };
+    accidentSiteApi();
+  }, [isAccidentSiteSelected]);
 
   useEffect(() => {
     const container = document.getElementById('map');
