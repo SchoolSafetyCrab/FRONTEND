@@ -14,12 +14,14 @@ import getAccidentSites from '../../api/main/getAccidentSite';
 import getTrafficLights from '../../api/main/getTrafficLight';
 import getSafehouses from '../../api/main/getSafehouse';
 import getCctvs from '../../api/main/getCctv';
+import getCrosswalks from '../../api/main/getCrosswalk';
 import {
   AlarmAtom,
   SafezoneAtom,
   AccidentSiteAtom,
   TrafficLightAtom,
   CctvAtom,
+  CrosswalkAtom,
 } from '../../store/home/Togglestore';
 // import { latlng } from '../../interfaces/ToggleInfo';
 import alarmImg from '../../assets/images/home/bell.svg';
@@ -27,6 +29,7 @@ import safezoneImg from '../../assets/images/home/safezone.svg';
 import accidentSiteImg from '../../assets/images/home/accident.svg';
 import trafficLightImg from '../../assets/images/home/trafficlight.svg';
 import cctvImg from '../../assets/images/home/cctv.svg';
+import crosswalkImg from '../../assets/images/home/crosswalk.svg';
 
 /* eslint-disable */
 declare global {
@@ -54,12 +57,14 @@ const MapBox = () => {
   const [isAccidentSiteSelected] = useAtom(AccidentSiteAtom);
   const [isTrafficLightSelected] = useAtom(TrafficLightAtom);
   const [isCctvSelected] = useAtom(CctvAtom);
+  const [isCrosswalkSelected] = useAtom(CrosswalkAtom);
   // 알람 마커들을 저장할 배열
   const alarmMarkersRef = useRef<any[]>([]);
   const safezoneMarkerRef = useRef<any[]>([]);
   const accidentSiteMarkerRef = useRef<any[]>([]);
   const trafficLightMarkerRef = useRef<any[]>([]);
   const cctvMarkerRef = useRef<any[]>([]);
+  const crosswalkMarkerRef = useRef<any[]>([]);
 
   function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
     const R = 6371; // 지구의 반지름 (단위: km)
@@ -486,6 +491,94 @@ const MapBox = () => {
 
     cctvApi();
   }, [isCctvSelected]);
+
+  // 횡단보도 데이터 지도에 찍기
+  useEffect(() => {
+    const map = mapRef.current;
+    const marker = markerRef.current;
+
+    const crosswalkApi = async () => {
+      if (isCrosswalkSelected) {
+        crosswalkMarkerRef.current.forEach((crosswalkMarker) => {
+          if (crosswalkMarker && typeof crosswalkMarker.setMap === 'function') {
+            crosswalkMarker.setMap(null);
+          } else {
+            console.error('Invalid crosswalkMarker:', crosswalkMarker);
+          }
+        });
+        crosswalkMarkerRef.current = [];
+
+        const userLat = point.latitude;
+        const userLon = point.longitude;
+
+        const resp = await getCrosswalks();
+        const tempArr = resp.response.body.items.item || [];
+        console.log('tempArr: ', tempArr);
+
+        if (tempArr.length > 0) {
+          const imageSize = new window.kakao.maps.Size(40, 45);
+          const markerImage = new window.kakao.maps.MarkerImage(crosswalkImg, imageSize);
+          let size = 0;
+
+          tempArr.forEach((crosswalk: any) => {
+            const lat1 = crosswalk.LATITUDE;
+            const lon1 = crosswalk.LONGITUDE;
+            const distance = getDistance(lat1, lon1, userLat, userLon);
+
+            if (distance <= 50 && size < 30) {
+              size++;
+
+              const crosswalkMarker = new window.kakao.maps.Marker({
+                position: new window.kakao.maps.LatLng(lat1, lon1),
+                map: map,
+                image: markerImage,
+              });
+
+              const iwContent = `
+                <div style="padding: 10px; width: 300px;">
+                  <div style="font-weight: bold;">횡단보도</div>
+                  <div>녹색신호 유지시간: ${crosswalk.GREENSGNGNRTIME}</div>
+                  <div>주소: ${crosswalk.LNMADR}</div>
+                  <div>음향신호기 설치여부: ${crosswalk.SONDSGNGNRYN}</div>
+                  <div>집중조명시설 설치여부: ${crosswalk.CNCTRLGHTFCLTYYN}</div>
+                </div>
+              `;
+
+              const infowindow = new window.kakao.maps.InfoWindow({
+                content: iwContent,
+              });
+
+              (function (marker, infowindow) {
+                // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
+                window.kakao.maps.event.addListener(marker, 'mouseover', function () {
+                  infowindow.open(map, marker);
+                });
+
+                // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+                window.kakao.maps.event.addListener(marker, 'mouseout', function () {
+                  infowindow.close();
+                });
+              })(crosswalkMarker, infowindow);
+
+              //  배열에 마커 추가
+              crosswalkMarkerRef.current.push(crosswalkMarker);
+            }
+          });
+
+          for (let i = 0; i < crosswalkMarkerRef.current.length; i++) {
+            const marker = crosswalkMarkerRef.current[i];
+            if (marker && typeof marker.setMap === 'function') {
+              marker.setMap(map);
+            } else {
+              console.error('Invalid marker:', marker);
+            }
+          }
+        }
+      }
+    };
+
+    crosswalkApi();
+  }, [isCrosswalkSelected]);
 
   useEffect(() => {
     const container = document.getElementById('map');

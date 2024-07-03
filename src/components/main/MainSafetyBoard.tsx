@@ -19,6 +19,7 @@ import {
   TrafficLightAtom,
   SafehouseAtom,
   CctvAtom,
+  CrosswalkAtom,
 } from '../../store/home/Togglestore';
 
 export default function MainSafetyBoard() {
@@ -30,6 +31,7 @@ export default function MainSafetyBoard() {
   const [isTrafficLightSelected, setIsTrafficLightSelected] = useAtom(TrafficLightAtom);
   const [isSafehouseSelected, setIsSafehouseSelected] = useAtom(SafehouseAtom);
   const [isCctvSelected, setIsCctvSelected] = useAtom(CctvAtom);
+  const [isCrosswalkSelected, setIsCrosswalkSelected] = useAtom(CrosswalkAtom);
 
   const handleVilbleSafety = () => {
     setIsSafetyVisible(!isSafetyVisible);
@@ -65,7 +67,12 @@ export default function MainSafetyBoard() {
 
   const handleCctv = async () => {
     setIsCctvSelected(!isCctvSelected);
-    console.log('cctv 선택여부: ', isCctvSelected);
+    // console.log('cctv 선택여부: ', isCctvSelected);
+  };
+
+  const handleCrosswalk = async () => {
+    setIsCrosswalkSelected(!isCrosswalkSelected);
+    console.log('횡단보도 선택여부: ', isCrosswalkSelected);
   };
   return (
     <section
@@ -126,7 +133,7 @@ export default function MainSafetyBoard() {
                   <img src={safezone} alt="보호구역" />
                   <p>어린이보호구역</p>
                 </button>
-                <button type="button">
+                <button type="button" onClick={handleCrosswalk}>
                   <img src={crosswalk} alt="횡단보도" />
                   <p>횡단보도</p>
                 </button>
