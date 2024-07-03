@@ -52,7 +52,7 @@ export default function MainSafetyBoard() {
 
   const handleAccidentSite = async () => {
     setIsAccidentSiteSelected(!isAccidentSiteSelected);
-    // console.log(isAccidentSiteSelected);
+    console.log(isAccidentSiteSelected);
   };
 
   const handleTrafficLight = async () => {

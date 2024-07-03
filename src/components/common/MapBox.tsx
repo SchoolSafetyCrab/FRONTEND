@@ -226,6 +226,7 @@ const MapBox = () => {
     safezoneApi();
   }, [isSafezoneSelected]);
 
+  // 사고 우발지 데이터 맵에 찍기
   useEffect(() => {
     const map = mapRef.current;
     const marker = markerRef.current;
@@ -241,7 +242,7 @@ const MapBox = () => {
         var userLat = point.latitude;
         var userLon = point.longitude;
 
-        const resp = await getAccidentSites({ lat: userLat, lng: userLon });
+        const resp = await getAccidentSites({ lat: 36.445326, lng: 127.425863 });
         const data = resp.data;
         console.log('accidentSite 결과 :', resp);
         if (data.length > 0) {
@@ -291,6 +292,8 @@ const MapBox = () => {
             accidentSiteMarkerRef.current[i].setMap(map);
           }
         }
+        var locPosition = new window.kakao.maps.LatLng(36.445326, 127.425863);
+        map.setCenter(locPosition);
       }
     };
     accidentSiteApi();
