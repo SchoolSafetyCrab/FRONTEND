@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { latlng } from '../../interfaces/ToggleInfo';
+import API_BASE_URL from '../Apiconfig';
 
 const getSafezones = async (props: latlng) => {
-  const URI = 'https://anjeonhaeyou.site/api/sub/school-zone';
-
+  const URI = `${API_BASE_URL}api/sub/school-zone`;
   console.log('latlng: ', props);
   try {
     const response = await axios.get(URI, {

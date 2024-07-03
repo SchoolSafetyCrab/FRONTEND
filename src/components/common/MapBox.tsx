@@ -12,17 +12,21 @@ import getAlarms from '../../api/main/getEmergencyAlarmInfo';
 import getSafezones from '../../api/main/getSafezone';
 import getAccidentSites from '../../api/main/getAccidentSite';
 import getTrafficLights from '../../api/main/getTrafficLight';
+import getSafehouses from '../../api/main/getSafehouse';
+import getCctvs from '../../api/main/getCctv';
 import {
   AlarmAtom,
   SafezoneAtom,
   AccidentSiteAtom,
   TrafficLightAtom,
+  CctvAtom,
 } from '../../store/home/Togglestore';
 // import { latlng } from '../../interfaces/ToggleInfo';
 import alarmImg from '../../assets/images/home/bell.svg';
 import safezoneImg from '../../assets/images/home/safezone.svg';
 import accidentSiteImg from '../../assets/images/home/accident.svg';
 import trafficLightImg from '../../assets/images/home/trafficlight.svg';
+import cctvImg from '../../assets/images/home/cctv.svg';
 
 /* eslint-disable */
 declare global {
@@ -49,11 +53,13 @@ const MapBox = () => {
   const [isSafezoneSelected] = useAtom(SafezoneAtom);
   const [isAccidentSiteSelected] = useAtom(AccidentSiteAtom);
   const [isTrafficLightSelected] = useAtom(TrafficLightAtom);
+  const [isCctvSelected] = useAtom(CctvAtom);
   // 알람 마커들을 저장할 배열
   const alarmMarkersRef = useRef<any[]>([]);
   const safezoneMarkerRef = useRef<any[]>([]);
   const accidentSiteMarkerRef = useRef<any[]>([]);
   const trafficLightMarkerRef = useRef<any[]>([]);
+  const cctvMarkerRef = useRef<any[]>([]);
 
   function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
     const R = 6371; // 지구의 반지름 (단위: km)
@@ -157,9 +163,10 @@ const MapBox = () => {
         var userLat = point.latitude;
         var userLon = point.longitude;
 
-        const resp = await getSafezones({ lat: userLat, lng: userLon });
+        const resp = await getSafezones({ lat: 36.445326, lng: 127.425863 });
+
         const data = resp.data;
-        console.log('safezone :', resp);
+        console.log('safezone data:', data);
         if (data.length > 0) {
           // 마커 이미지의 이미지 크기 입니다
           var imageSize = new window.kakao.maps.Size(40, 45);
@@ -167,7 +174,7 @@ const MapBox = () => {
           // 마커 이미지를 생성합니다
           var markerImage = new window.kakao.maps.MarkerImage(safezoneImg, imageSize);
           data.forEach((safezone: any) => {
-            const marker = new window.kakao.maps.Marker({
+            const schoolzoneMarker = new window.kakao.maps.Marker({
               position: new window.kakao.maps.LatLng(safezone.latitude, safezone.longitude),
               map: map,
               image: markerImage,
@@ -179,7 +186,7 @@ const MapBox = () => {
               <div style="font-weight: bold;">어린이 보호구역</div>
               <div>이름: ${safezone.name}</div>
               <div>주소: ${safezone.address}</div>
-              <div>CCTV 개수: ${safezone.cctvNum}</div>
+              <div>CCTV 개수: ${safezone.cctvNum} 개</div>
             </div>
             `;
 
@@ -197,15 +204,17 @@ const MapBox = () => {
               window.kakao.maps.event.addListener(marker, 'mouseout', function () {
                 infowindow.close();
               });
-            })(marker, infowindow);
+            })(schoolzoneMarker, infowindow);
 
             // alarmMarkers 배열에 마커 추가
-            safezoneMarkerRef.current.push(marker);
+            safezoneMarkerRef.current.push(schoolzoneMarker);
           });
 
           for (var i = 0; i < safezoneMarkerRef.current.length; i++) {
             safezoneMarkerRef.current[i].setMap(map);
           }
+          var locPosition = new window.kakao.maps.LatLng(36.445326, 127.425863);
+          map.setCenter(locPosition);
         }
       }
     };
@@ -366,6 +375,117 @@ const MapBox = () => {
 
     trafficLightApi();
   }, [isTrafficLightSelected]);
+
+  // 안전 어린이집
+  useEffect(() => {
+    const fetchSafehouseData = async () => {
+      try {
+        const response: any = await getSafehouses();
+
+        const { features } = response.response.result.featureCollection;
+        console.log('안전 어린이집 결과여기:', features);
+
+        // const safehouses: SafetyHouse[] = features.map((feature: any) => ({
+        //   lat: feature.geometry.coordinates[1],
+        //   lng: feature.geometry.coordinates[0],
+        //   name: feature.properties.fac_nam,
+        //   address: feature.properties.fac_o_add,
+        //   tel: feature.properties.fac_tel,
+        // }));
+      } catch (error) {
+        console.error('안전이집 정보를 불러오는 중 오류가 발생했습니다:', error);
+      }
+    };
+
+    fetchSafehouseData();
+  }, []);
+
+  // CCTV 데이터 지도에 찍기
+  useEffect(() => {
+    const map = mapRef.current;
+    const marker = markerRef.current;
+
+    const cctvApi = async () => {
+      if (isCctvSelected) {
+        cctvMarkerRef.current.forEach((cctvMarker) => {
+          if (cctvMarker && typeof cctvMarker.setMap === 'function') {
+            cctvMarker.setMap(null);
+          } else {
+            console.error('Invalid cctv marker:', cctvMarker);
+          }
+        });
+        cctvMarkerRef.current = [];
+
+        const userLat = point.latitude;
+        const userLon = point.longitude;
+
+        const resp = await getCctvs();
+        const tempArr = resp.response.body.items || [];
+        console.log('tempArr: ', tempArr);
+
+        if (tempArr.length > 0) {
+          const imageSize = new window.kakao.maps.Size(40, 45);
+          const markerImage = new window.kakao.maps.MarkerImage(cctvImg, imageSize);
+          let size = 0;
+
+          tempArr.forEach((cctv: any) => {
+            const lat1 = cctv.crdntY;
+            const lon1 = cctv.crdntX;
+            const distance = getDistance(lat1, lon1, userLat, userLon);
+
+            if (distance <= 1 && size < 30) {
+              size++;
+
+              const cctvMarker = new window.kakao.maps.Marker({
+                position: new window.kakao.maps.LatLng(lat1, lon1),
+                map: map,
+                image: markerImage,
+              });
+
+              const iwContent = `
+                <div style="padding: 10px; width: 300px;">
+                  <div style="font-weight: bold;">어린이 방범 CCTV</div>
+                  <div>이름: ${cctv.manageNo}</div>
+                  <div>주소: ${cctv.lnmAdres}</div>
+                  <div>관리처: ${cctv.polcDstrc}</div>
+                </div>
+              `;
+
+              const infowindow = new window.kakao.maps.InfoWindow({
+                content: iwContent,
+              });
+
+              (function (marker, infowindow) {
+                // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
+                window.kakao.maps.event.addListener(marker, 'mouseover', function () {
+                  infowindow.open(map, marker);
+                });
+
+                // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+                window.kakao.maps.event.addListener(marker, 'mouseout', function () {
+                  infowindow.close();
+                });
+              })(cctvMarker, infowindow);
+
+              // alarmMarkers 배열에 마커 추가
+              cctvMarkerRef.current.push(cctvMarker);
+            }
+          });
+
+          for (let i = 0; i < cctvMarkerRef.current.length; i++) {
+            const marker = cctvMarkerRef.current[i];
+            if (marker && typeof marker.setMap === 'function') {
+              marker.setMap(map);
+            } else {
+              console.error('Invalid marker:', marker);
+            }
+          }
+        }
+      }
+    };
+
+    cctvApi();
+  }, [isCctvSelected]);
 
   useEffect(() => {
     const container = document.getElementById('map');

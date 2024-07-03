@@ -17,6 +17,8 @@ import {
   SafezoneAtom,
   AccidentSiteAtom,
   TrafficLightAtom,
+  SafehouseAtom,
+  CctvAtom,
 } from '../../store/home/Togglestore';
 
 export default function MainSafetyBoard() {
@@ -26,6 +28,8 @@ export default function MainSafetyBoard() {
   const [isSafezoneSelected, setIsSafezoneSelected] = useAtom(SafezoneAtom);
   const [isAccidentSiteSelected, setIsAccidentSiteSelected] = useAtom(AccidentSiteAtom);
   const [isTrafficLightSelected, setIsTrafficLightSelected] = useAtom(TrafficLightAtom);
+  const [isSafehouseSelected, setIsSafehouseSelected] = useAtom(SafehouseAtom);
+  const [isCctvSelected, setIsCctvSelected] = useAtom(CctvAtom);
 
   const handleVilbleSafety = () => {
     setIsSafetyVisible(!isSafetyVisible);
@@ -41,18 +45,28 @@ export default function MainSafetyBoard() {
 
   const handleSafezone = async () => {
     setIsSafezoneSelected(!isSafezoneSelected);
+    // console.log('safe-zone 선택: ', isSafezoneSelected);
   };
 
   const handleAccidentSite = async () => {
     setIsAccidentSiteSelected(!isAccidentSiteSelected);
-    console.log(isAccidentSiteSelected);
+    // console.log(isAccidentSiteSelected);
   };
 
   const handleTrafficLight = async () => {
     setIsTrafficLightSelected(!isTrafficLightSelected);
-    console.log(isTrafficLightSelected);
+    // console.log(isTrafficLightSelected);
   };
 
+  const handleSafehouse = async () => {
+    setIsSafehouseSelected(!isSafehouseSelected);
+    // console.log('안전어린이집 선택여부: ', isSafehouseSelected);
+  };
+
+  const handleCctv = async () => {
+    setIsCctvSelected(!isCctvSelected);
+    console.log('cctv 선택여부: ', isCctvSelected);
+  };
   return (
     <section
       className="mainSafetyContainer"
@@ -98,11 +112,11 @@ export default function MainSafetyBoard() {
                   <img src={bell} alt="비상벨" />
                   <p>비상벨</p>
                 </button>
-                <button type="button">
+                <button type="button" onClick={handleSafehouse}>
                   <img src={safehouse} alt="안심집" />
                   <p>안심지킴이집</p>
                 </button>
-                <button type="button">
+                <button type="button" onClick={handleCctv}>
                   <img src={cctv} alt="cctv" />
                   <p>어린이방법CCTV</p>
                 </button>
