@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable operator-linebreak */
 /* eslint-disable max-len */
 import axios from 'axios';
@@ -13,10 +14,9 @@ const getTrafficLights = async () => {
         numOfRows: 20149,
         pageNo: 1,
         type: 'json',
+        TFCLGHTSE: '02',
       },
     });
-
-    // console.log(response.data);
 
     return response.data;
   } catch (error) {

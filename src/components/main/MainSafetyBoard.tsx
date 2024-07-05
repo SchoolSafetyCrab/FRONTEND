@@ -32,7 +32,6 @@ export default function MainSafetyBoard() {
   const [isSafehouseSelected, setIsSafehouseSelected] = useAtom(SafehouseAtom);
   const [isCctvSelected, setIsCctvSelected] = useAtom(CctvAtom);
   const [isCrosswalkSelected, setIsCrosswalkSelected] = useAtom(CrosswalkAtom);
-
   const handleVilbleSafety = () => {
     setIsSafetyVisible(!isSafetyVisible);
   };
@@ -62,7 +61,7 @@ export default function MainSafetyBoard() {
 
   const handleSafehouse = async () => {
     setIsSafehouseSelected(!isSafehouseSelected);
-    // console.log('안전어린이집 선택여부: ', isSafehouseSelected);
+    console.log('안전어린이집 선택여부: ', isSafehouseSelected);
   };
 
   const handleCctv = async () => {

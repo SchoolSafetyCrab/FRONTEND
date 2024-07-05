@@ -4,7 +4,7 @@ import API_BASE_URL from '../Apiconfig';
 
 const getSafezones = async (props: latlng) => {
   const URI = `${API_BASE_URL}api/sub/school-zone`;
-  console.log('latlng: ', props);
+  console.log('어린이보호 latlng: ', props);
   try {
     const response = await axios.get(URI, {
       params: {
@@ -12,12 +12,12 @@ const getSafezones = async (props: latlng) => {
         longitude: props.lng,
       },
     });
+    console.log('어린이 보호 api 결과: ', response);
 
-    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error('어린이보호구역 정보 불러오기 오류:', error);
-    return null;
+    // console.error('어린이보호구역 정보 불러오기 오류 (데이터가 없을 수 있음):', error);
+    return [];
   }
 };
 

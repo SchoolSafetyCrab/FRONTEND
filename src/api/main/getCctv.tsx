@@ -14,7 +14,7 @@ const getCctvs = async () => {
       },
     });
 
-    console.log(response.data);
+    console.log('api 내부에서 cctv 불러옴: ', response.data);
 
     return response.data;
   } catch (error) {
