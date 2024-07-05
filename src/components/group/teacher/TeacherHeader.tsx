@@ -25,14 +25,7 @@ const TeacherHeader: React.FC = () => {
           className={activeButton === '지도' ? 'active' : ''}
           onClick={() => handleButtonClick('지도')}
         >
-          지도
-        </button>
-        <button
-          type="button"
-          className={activeButton === '게시글' ? 'active' : ''}
-          onClick={() => handleButtonClick('게시글')}
-        >
-          게시글
+          그룹조회
         </button>
       </div>
       <button type="button" onClick={handleGroupMake}>

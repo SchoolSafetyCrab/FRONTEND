@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import back from '@assets/images/mypage/backarrow.svg';
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent } from 'react';
 import '@styles/group/teacher/TeacherWritePage.css';
 import { postNotification, NotificationInfo } from '../../api/group/postNotificationApi';
-import getGroupInfo from '../../api/group/getGroupInfo';
+
 // import { GroupInfoResponse, GroupInfo } from '../../interfaces/GroupInfo';
 
 export default function TeacherNoticePage() {
@@ -11,7 +11,9 @@ export default function TeacherNoticePage() {
   const [inputTitle, setInputTitle] = useState('');
   const [inputNotice, setInputNotice] = useState('');
   // eslint-disable-next-line no-unused-vars
-  const [groupInfo, setGroupInfo] = useState(1 || null);
+
+  const params = useParams();
+  const groupId: string = params.groupId as string;
 
   const handleBack = () => {
     navigate(-1);
@@ -31,23 +33,6 @@ export default function TeacherNoticePage() {
     setInputTitle(value);
   };
 
-  useEffect(() => {
-    const fetchGroupInfo = async () => {
-      try {
-        const res = await getGroupInfo();
-        if (res) {
-          const num = res.length - 1;
-          setGroupInfo(res[num]?.groupId);
-        } else {
-          console.error('Response is null or undefined');
-        }
-      } catch (error) {
-        console.error('Error fetching group info:', error);
-      }
-    };
-    fetchGroupInfo();
-  }, []);
-
   const handleConfirm = async () => {
     // 현재 날짜를 가져옵니다.
     const today = new Date();
@@ -59,7 +44,7 @@ export default function TeacherNoticePage() {
       title: inputTitle,
       detail: inputNotice,
       endDate: endDates,
-      groupId: groupInfo,
+      groupId: Number(groupId),
       // 다른 필요한 필드들을 추가할 수 있음
     };
 
@@ -102,9 +87,14 @@ export default function TeacherNoticePage() {
         </button>
       </section>
       <section className="content-wrapper">
-        <input value={inputTitle} onChange={handleTitle} placeholder="제목" />
+        <input
+          value={inputTitle}
+          onChange={handleTitle}
+          placeholder="제목"
+          style={{ width: '100%' }}
+        />
         <textarea
-          rows={25}
+          style={{ width: '100%' }}
           className=" txt-area"
           id="parentId"
           placeholder="공지사항 내용을 작성해주세요"

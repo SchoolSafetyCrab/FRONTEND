@@ -12,6 +12,7 @@ const getGroupNotification = async (groupId: number): Promise<MessageInfo[] | nu
       },
     });
     const result = response.data.data;
+    console.log(result);
     return result;
   } catch (err) {
     console.log(err);

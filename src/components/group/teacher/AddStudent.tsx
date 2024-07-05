@@ -14,7 +14,6 @@ import profile5 from '@assets/images/profile/map/profile5.png';
 import profile6 from '@assets/images/profile/map/profile6.png';
 
 // import { GroupMember } from '../../../interfaces/GroupMember';
-import { addStudentAtom } from './TeacherMap';
 import { groupMembers, selectedMembers } from '../../../store/group/Groupstore';
 
 import '@styles/group/teacher/AddStudent.css';
@@ -23,7 +22,6 @@ export default function AddStudent() {
   const [groupList] = useAtom(groupMembers);
   const [tempSelectedStudents, setTempSelectedStudents] = useState<number[]>([]);
   const [selectedStudents, setSelectedStudents] = useAtom(selectedMembers);
-  const [, setAddStudent] = useAtom(addStudentAtom);
 
   useEffect(() => {
     console.log('추가된 멤버들:', selectedStudents);
@@ -49,12 +47,9 @@ export default function AddStudent() {
   const handleAddStudents = () => {
     const selected = groupList.filter((member) => tempSelectedStudents.includes(member.userId));
     setSelectedStudents(selected);
-    setAddStudent(false);
   };
 
-  const handleClose = () => {
-    setAddStudent(false);
-  };
+  const handleClose = () => {};
 
   return (
     <div className="student-add-container">

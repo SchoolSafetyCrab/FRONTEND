@@ -3,7 +3,12 @@
     height: 100%;
     display: flex;
     gap: 3%;
-    overflow-x: hidden;
+    overflow-x: scroll; 
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+.groupChildrenFindContainer::-webkit-scrollbar {
+    display: none; 
 }
 
 .childInfo{

@@ -1,34 +1,27 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import Search from '@assets/images/group/search.svg';
 import '@styles/group/SearchBar.css';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
+  onInputChange: (value: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [inputValue, setInputValue] = useState<string>('');
-
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onInputChange }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleSearchClick = () => {
-    onSearch(inputValue);
+    const { value } = event.target;
+    onSearch(value);
+    onInputChange(value);
   };
 
   return (
     <div className="search-bar">
       <input
         type="text"
-        value={inputValue}
         onChange={handleInputChange}
         placeholder="그룹 이름을 검색하세요"
       />
-      <button type="button" onClick={handleSearchClick}>
-        <img src={Search} alt="검색하기" />
-      </button>
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
+import { useParams } from 'react-router-dom';
+
 import { useAtom } from 'jotai';
 import profile1 from '@assets/images/profile/profile1.svg';
 import profile2 from '@assets/images/profile/profile2.svg';
@@ -13,6 +15,9 @@ import '@styles/groupChildrenPage/GroupChildrenFind.css';
 import db from '../../../firebase';
 import childrenLocationAtom from '../../../store/children/ChildrenLocation';
 import childrenSchoolWayAtom from '../../../store/children/ChildrenSchoolWay';
+import userInfoAtom from '../../../store/userInfo/UserFindInfo';
+import findTeacherChildren from '../../../api/findChildren/FindChildrenTeacher';
+import TeacherFindChildrenSchoolWay from '../../../api/group/TeacherFindChildrenSchoolWay';
 
 interface Children {
   userId: number;
@@ -38,33 +43,71 @@ export default function GroupChildrenFind() {
   const [clickedChild, setClickedChild] = useState<{ id: string; img: string } | null>(null);
   const [unsubscribeSnapshot, setUnsubscribeSnapshot] = useState<(() => void) | null>(null);
   const [, setChildrenSchoolWay] = useAtom(childrenSchoolWayAtom);
+  const [userRole] = useAtom(userInfoAtom);
+
+  const params = useParams();
+  const groupId: string = params.groupId as string;
 
   useEffect(() => {
-    const fetchChildrenData = async () => {
-      try {
-        const children = await findChildren(); // findChildren function call
-        if (children) {
-          setChildrenData(children);
+    if (userRole.role === 'ROLE_PARENTS') {
+      const fetchChildrenData = async () => {
+        try {
+          const children = await findChildren(); // findChildren function call
+          if (children) {
+            setChildrenData(children);
+          }
+        } catch (error) {
+          console.error('Error fetching children info:', error);
         }
-      } catch (error) {
-        console.error('Error fetching children info:', error);
-      }
-    };
-    fetchChildrenData();
-  }, []);
+      };
+      fetchChildrenData();
+    }
+
+    if (userRole.role === 'ROLE_TEACHER') {
+      const fetchChildrenData = async () => {
+        try {
+          const children = await findTeacherChildren(groupId);
+          if (children) {
+            setChildrenData(children);
+          }
+        } catch (error) {
+          console.error('Error fetching children info:', error);
+        }
+      };
+      fetchChildrenData();
+    }
+  }, [userRole.role, groupId]);
 
   const findChildLocation = async (userId: number, id: string, img: string) => {
     setClickedChild({ id, img });
-    try {
-      const schoolway: ChildrenSchoolWay[] | null = await childrenSchoolWay(userId);
-      if (schoolway) {
-        setChildrenSchoolWay(schoolway);
-      } else {
-        setChildrenSchoolWay([]); // 또는 적절하게 null 케이스를 처리
+    if (userRole.role === 'ROLE_PARENTS') {
+      try {
+        const schoolway: ChildrenSchoolWay[] | null = await childrenSchoolWay(userId);
+        if (schoolway) {
+          setChildrenSchoolWay(schoolway);
+        } else {
+          setChildrenSchoolWay([]); // 또는 적절하게 null 케이스를 처리
+        }
+      } catch (error) {
+        console.error('Error fetching children info:', error);
+        setChildrenSchoolWay([]);
       }
-    } catch (error) {
-      console.error('Error fetching children info:', error);
-      setChildrenSchoolWay([]);
+    }
+    if (userRole.role === 'ROLE_TEACHER') {
+      try {
+        const schoolway: ChildrenSchoolWay[] | null = await TeacherFindChildrenSchoolWay(
+          userId,
+          groupId,
+        );
+        if (schoolway) {
+          setChildrenSchoolWay(schoolway);
+        } else {
+          setChildrenSchoolWay([]); // 또는 적절하게 null 케이스를 처리
+        }
+      } catch (error) {
+        console.error('Error fetching children info:', error);
+        setChildrenSchoolWay([]);
+      }
     }
   };
 
