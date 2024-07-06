@@ -522,10 +522,13 @@ const MapBox = () => {
       const resp = await getCctvs();
       const tempArr = resp.response.body.items || [];
       console.log('api 밖에서 받은 tempArr: ', tempArr);
-      setCctvs(tempArr);
+
+      if (tempArr.length > 0) {
+        setCctvs(tempArr);
+      }
     };
     cctvApi();
-  }, [isCctvSelected]);
+  }, []);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -607,7 +610,9 @@ const MapBox = () => {
       const resp = await getCrosswalks();
       const tempArr = resp.response.body.items.item || [];
       console.log('횡단보도: ', tempArr);
-      setCrossWalks(tempArr);
+      if (tempArr.length > 0) {
+        setCrossWalks(tempArr);
+      }
     };
 
     crosswalkApi();

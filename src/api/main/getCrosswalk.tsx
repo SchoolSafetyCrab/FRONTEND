@@ -21,7 +21,7 @@ const getCrosswalks = async () => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('횡단보도 정보 불러오기 오류:', error);
-    return null;
+    return [];
   }
 };
 
