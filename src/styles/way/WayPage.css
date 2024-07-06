@@ -1,0 +1,22 @@
+.waypage-container {
+  width: 100%;
+  height: 100%;
+}
+
+.button-section {
+  right: 8%;
+  background-color: transparent;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  position: absolute;
+  top: 5%;
+}
+
+.map-section {
+  width: 100%;
+  height: 100%;
+}
