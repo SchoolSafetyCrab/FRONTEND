@@ -12,6 +12,7 @@ import Header from '../components/common/Header';
 import TabBar from '../components/common/TabBar';
 import findUserInfo from '../api/user/UserFindInfo';
 import userInfoAtom from '../store/userInfo/UserFindInfo';
+import NoWayPage from '../pages/wayPage/NoWayPage';
 
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState(1);
@@ -44,7 +45,11 @@ export default function MainPage() {
 
   const tabs = [
     { id: 1, title: '홈', component: <HomePage /> },
-    { id: 2, title: '안전등하굣길', component: <WayPage /> },
+    {
+      id: 2,
+      title: '안전등하굣길',
+      component: userInfo.role === 'ROLE_STUDENT' ? <WayPage /> : <NoWayPage />,
+    },
     {
       id: 3,
       title: userInfo.role === 'ROLE_PARENTS' ? '내 자녀 조회' : '그룹조회',
