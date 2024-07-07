@@ -1,77 +1,76 @@
 /* session */
 
-.agreement-header{
-    width: 100%;
-    height: 20%;
+.agreement-header {
+  width: 100%;
+  height: 20%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 5%;
-    
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 5%;
 }
 
-.agreement-img{
-    width: 100%;
-    height: 35%;
+.agreement-img {
+  width: 100%;
+  height: 35%;
 }
 
-.agreement-check{
-    width: 100%;
-    height: 35%;
+.agreement-check {
+  width: 100%;
+  height: 35%;
 }
 
-.agreement-next-btn{
-    width: 100%;
-    height: 5%;
-    display: flex;
-    justify-content: center;
+.agreement-next-btn {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: center;
 }
 
 /*agreement-header*/
-.agreement-header > h1{
-    font-size: 1.7rem;
-    font-weight: bolder;
+.agreement-header > h1 {
+  font-size: 1.7rem;
+  font-weight: bolder;
 }
 
 /*agreement-img*/
-.img-center{
-    width: 100%;
-    height: 100%;
+.img-center {
+  width: 100%;
+  height: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.img-center > img{
-    width: 100%;
-    height: 100%;
+.img-center > img {
+  width: 60%;
+  height: 100%;
 }
 
 /*agreement-check*/
 .checkboxes {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    
-    width: 100%;
-    height: 100%;
-    padding-left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  padding-left: 5%;
 }
 
-.checkbox{
-    height: 20%;
-    width: 100%;
-    display: flex;
-    align-items: center;
+.checkbox {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 /*agreement-next-btn  */
-.agreement-button-container{
-    width: 90%;
+.agreement-button-container {
+  width: 90%;
 }
 
-.agreement-btn{
-    width: 100%;
-  }
+.agreement-btn {
+  width: 100%;
+}

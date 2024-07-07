@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Checkbox from '@components/common/Checkbox';
 import '@styles/login/LoginMain.css';
 
-import MainHeader from '@assets/images/MainHeader.svg';
+// import MainHeader from '@assets/images/MainHeader.svg';
+import LoginHeader from '@assets/images/main/LoginHeader2.png';
 import login from '../../api/login/LoginApi';
 
 export default function LoginMain() {
@@ -38,7 +39,7 @@ export default function LoginMain() {
   return (
     <>
       <section className="login-main-header">
-        <img src={MainHeader} alt="logo img" />
+        <img src={LoginHeader} alt="logo img" />
       </section>
 
       <section className="id-password">
