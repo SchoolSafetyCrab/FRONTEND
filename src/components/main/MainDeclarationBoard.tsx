@@ -107,6 +107,9 @@ export default function MainDeclarationBoard() {
     setSelectImages(updatedImageFiles);
   };
 
+  const setBoardClose = () => {
+    setBoardVisible(false);
+  };
   useEffect(() => {
     if (title.length !== 0 && content.length !== 0 && uploadedImages.length !== 0) {
       setIsDeclaration(false);
@@ -123,6 +126,24 @@ export default function MainDeclarationBoard() {
       }}
     >
       <div className="declarationBoardHeader">
+        <Button
+          className="agreement-btn custom-button"
+          variant="primary"
+          size="lg"
+          onClick={setBoardClose}
+          style={{
+            backgroundColor: '#DDDBD6',
+            width: '20%',
+            height: '40%',
+            color: 'white',
+            border: 'none',
+            padding: 0,
+            fontSize: '1rem',
+            borderRadius: '20px',
+          }}
+        >
+          취소
+        </Button>
         <Button
           className="agreement-btn custom-button"
           variant="primary"
