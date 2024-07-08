@@ -12,7 +12,7 @@ import profile6 from '@assets/images/profile/profile6.svg';
 import findChildren from '../../../api/findChildren/FindChildren';
 import childrenSchoolWay from '../../../api/childrenSchoolWay/ChildrenSchoolWay';
 import '@styles/groupChildrenPage/GroupChildrenFind.css';
-import db from '../../../firebase';
+import { db } from '../../../firebase';
 import childrenLocationAtom from '../../../store/children/ChildrenLocation';
 import childrenSchoolWayAtom from '../../../store/children/ChildrenSchoolWay';
 import userInfoAtom from '../../../store/userInfo/UserFindInfo';

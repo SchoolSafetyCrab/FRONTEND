@@ -23,4 +23,10 @@ module.exports = {
       },
     },
   ],
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      firebase: 'firebase/app', // Firebase 모듈에 대한 별칭 설정
+    },
+  },
 };
