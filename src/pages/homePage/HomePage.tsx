@@ -116,22 +116,41 @@ export default function HomePage() {
         {isActiveDeclarationBtn ? (
           <>
             <div className={styles.mainPageBtnContainer}>
-              <Button
-                className="login-btn custom-button"
-                variant="primary"
-                size="lg"
-                onClick={handleStartGoToSchool}
-                style={{
-                  backgroundColor: '#FFB800',
-                  color: 'white',
-                  border: 'none',
-                  width: '80%',
-                  left: '50%',
-                  zIndex: '2',
-                }}
-              >
-                등하교 시작
-              </Button>
+              {!isStartGotoSchool ? (
+                <Button
+                  className="login-btn custom-button"
+                  variant="primary"
+                  size="lg"
+                  onClick={handleStartGoToSchool}
+                  style={{
+                    backgroundColor: '#FFB800',
+                    color: 'white',
+                    border: 'none',
+                    width: '80%',
+                    left: '50%',
+                    zIndex: '2',
+                  }}
+                >
+                  등하교 시작
+                </Button>
+              ) : (
+                <Button
+                  className="login-btn custom-button"
+                  variant="primary"
+                  size="lg"
+                  onClick={handleStartGoToSchool}
+                  style={{
+                    backgroundColor: '#FF5C00',
+                    color: 'white',
+                    border: 'none',
+                    width: '80%',
+                    left: '50%',
+                    zIndex: '2',
+                  }}
+                >
+                  등하교 종료
+                </Button>
+              )}
             </div>
             <MainSafetyBoard />
           </>
