@@ -133,7 +133,7 @@ export default function GroupChildrenFind() {
             setChildrenLocation(child);
 
             if (latitude === 0 && longitude === 0) {
-              alert('자식 위치를 찾을 수 없어요!!');
+              alert('학생의 위치를 찾을 수 없어요!!');
               unsubscribe(); // Unsubscribe current snapshot listener
               setUnsubscribeSnapshot(null); // Clear unsubscribe function
             }
