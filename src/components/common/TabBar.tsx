@@ -25,7 +25,7 @@ const TabBar: React.FC<TabBarProps> = ({ activeTab, onTabClick }) => {
     { id: 2, title: '안전등하굣길', icon: wayIcon, activeIcon: wayIconActive }, // 예시용으로 같은 아이콘 사용
     {
       id: 3,
-      title: userInfo.role === 'ROLE_PARENTS' ? '자식조회' : '그룹조회',
+      title: userInfo.role === 'ROLE_PARENTS' ? '내 자녀 조회' : '그룹조회',
       icon: groupIcon,
       activeIcon: groupIconActive,
     },
