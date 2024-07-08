@@ -2,8 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Checkbox from '@components/common/Checkbox';
-
-import logo from '@assets/images/logo.png';
+import crab from '@assets/images/main/crab.png';
 
 import '@styles/join/Agreement.css';
 
@@ -41,7 +40,7 @@ export default function Agreement() {
       </section>
       <section className="agreement-img">
         <div className="img-center">
-          <img className="imgs" src={logo} alt="logo img" />
+          <img className="imgs" src={crab} alt="logo img" />
         </div>
       </section>
       <section className="agreement-check">

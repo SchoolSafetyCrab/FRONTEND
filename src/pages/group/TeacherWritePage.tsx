@@ -1,3 +1,6 @@
+/* eslint-disable operator-linebreak */
+/* eslint-disable prefer-template */
+/* eslint-disable prefer-const */
 import { useNavigate, useParams } from 'react-router-dom';
 import back from '@assets/images/mypage/backarrow.svg';
 import { useState, ChangeEvent } from 'react';
@@ -33,12 +36,20 @@ export default function TeacherNoticePage() {
     setInputTitle(value);
   };
 
-  const handleConfirm = async () => {
-    // 현재 날짜를 가져옵니다.
+  const changeDateFormat = () => {
     const today = new Date();
+    const date = new Date(today);
+    date.setDate(today.getDate() + 2);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const dateStr = `${year}-${month}-${day}`;
+    return dateStr;
+  };
+
+  const handleConfirm = async () => {
     // 오늘 날짜에 2일을 더합니다.
-    const endDates = new Date(today);
-    endDates.setDate(endDates.getDate() + 2);
+    const endDates = changeDateFormat();
 
     const noti: NotificationInfo = {
       title: inputTitle,
@@ -49,11 +60,13 @@ export default function TeacherNoticePage() {
     };
 
     try {
+      console.log('들어가는 공지사항: ', noti);
       const isSuccess = await postNotification(noti);
+      console.log('공지사항 메시지: ', isSuccess);
       if (isSuccess) {
         console.log('공지사항 등록');
       } else {
-        console.error('Failed to send Parent ID');
+        console.error('공지사항 등록 실패');
       }
       navigate(-1);
     } catch (error) {
