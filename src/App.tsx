@@ -1,11 +1,16 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Col, Row, Container } from 'react-bootstrap';
+// import firebase from 'firebase/compat/app';
+
+// import React, { useEffect, useState } from 'react';
 import MyPage from '@pages/mypagePage/MyPage';
 import TeacherGroupInfo from '@pages/group/TeacherGroupInfo';
 import TeacherWritePage from '@pages/group/TeacherWritePage';
 import JoinPage from './routes/JoinPage';
 import LoginPage from './routes/LoginPage';
 import MainPage from './routes/MainPage';
+// import 'firebase/messaging';
+import 'firebase/analytics';
 
 function App() {
   return (

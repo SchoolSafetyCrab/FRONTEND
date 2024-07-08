@@ -9,7 +9,7 @@ import activeDeclarationBtn from '@assets/images/main/activeDeclarationButton.sv
 // import ReportWhite from '@assets/images/home/report-white.svg';
 import styles from '@styles/home/HomePage.module.css';
 import MapBox from '../../components/common/MapBox';
-import db from '../../firebase';
+import { db } from '../../firebase';
 
 import {
   isActiveDeclarationBtnAtom,
